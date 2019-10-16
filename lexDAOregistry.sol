@@ -1,6 +1,5 @@
 /*
 || THE LEXDAO REGISTRY (TLDR) || version 0.1
-~~InterNative Commons // Collective Patterns ;-000
 
 DEAR MSG.SENDER(S):
 
