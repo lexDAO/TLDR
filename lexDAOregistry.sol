@@ -653,4 +653,4 @@ contract lexDAORegistry is ScribeRole { // TLDR: internet-native market to wrap 
     	ddr.paid = ddr.paid.add(ddr.deliverableRate); // tracks total ERC-20 wei amount paid under rddr 
         emit Paid(ddr.ddrNumber, ddr.lexID); 
     	}
-    }
+}
