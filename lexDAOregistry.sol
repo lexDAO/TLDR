@@ -721,9 +721,9 @@ contract lexDAORegistry is ScribeRole, ERC20 { // TLDR: internet-native market t
     // reputable lexScribes can register lexScript legal wrappers on TLDR and program ERC-20 lexFees associated with lexID / receive LEX award
     function writeLexScript(string memory templateTerms, uint256 lexRate, address lexAddress) public {
         require(isReputable(msg.sender)); // program governance check / lexScribe must be reputable 
-	    uint256 lexID = LSW.add(1); // reflects new lexScript value for tracking lexScript wrappers
-	    uint256 lexVersion = 0; // initalized lexVersion, "0"
-	    LSW = LSW.add(1); // counts new entry to LSW 
+	uint256 lexID = LSW.add(1); // reflects new lexScript value for tracking lexScript wrappers
+	uint256 lexVersion = 0; // initalized lexVersion, "0"
+	LSW = LSW.add(1); // counts new entry to LSW 
 	    
 	    lexScript[lexID] = lexScriptWrapper( // populate lexScript data for reference in rddr
                 msg.sender,
@@ -739,9 +739,9 @@ contract lexDAORegistry is ScribeRole, ERC20 { // TLDR: internet-native market t
 	    
     // lexScribes can update TLDR lexScript wrappers with new templateTerms and (0x) newLexAddress / versions up LSW
     function editLexScript(uint256 lexID, string memory templateTerms, address lexAddress) public {
-	    lexScriptWrapper storage lS = lexScript[lexID]; // retrieve rdc data
-	    require(address(msg.sender) == lS.lexScribe); // program safety check / authorization
-	    uint256 lexVersion = lS.lexVersion.add(1); // updates lexVersion 
+	lexScriptWrapper storage lS = lexScript[lexID]; // retrieve rdc data
+	require(address(msg.sender) == lS.lexScribe); // program safety check / authorization
+	uint256 lexVersion = lS.lexVersion.add(1); // updates lexVersion 
 	    
 	    lexScript[lexID] = lexScriptWrapper( // populate updated lexScript data for reference in rddr
                 msg.sender,
@@ -760,10 +760,10 @@ contract lexDAORegistry is ScribeRole, ERC20 { // TLDR: internet-native market t
     ***************/
     // public can sign and associate (0x) with lexScript digital covenant wrapper 
     function signDC(uint256 lexID, string memory signatureDetails) public { // sign Digital Covenant with (0x) address
-	    lexScriptWrapper storage lS = lexScript[lexID]; // retrieve LSW data
-	    uint256 dcNumber = RDC.add(1); // reflects new rdc value for public inspection and signature revocation
-	    bool revoked = false; // initialized value of Digital Covenant, "false"
-	    RDC = RDC.add(1); // counts new entry to RDC
+	lexScriptWrapper storage lS = lexScript[lexID]; // retrieve LSW data
+	uint256 dcNumber = RDC.add(1); // reflects new rdc value for public inspection and signature revocation
+	bool revoked = false; // initialized value of Digital Covenant, "false"
+	RDC = RDC.add(1); // counts new entry to RDC
 	        
 	    rdc[dcNumber] = DC( // populate rdc data
                 msg.sender,
@@ -779,8 +779,8 @@ contract lexDAORegistry is ScribeRole, ERC20 { // TLDR: internet-native market t
     	
     // registered DC signatories can revoke (0x) signature  
     function revokeDC(uint256 dcNumber) public { // revoke Digital Covenant signature with (0x) address
-	    DC storage dc = rdc[dcNumber]; // retrieve rdc data
-	    require(address(msg.sender) == dc.signatory); // program safety check / authorization
+	DC storage dc = rdc[dcNumber]; // retrieve rdc data
+	require(address(msg.sender) == dc.signatory); // program safety check / authorization
 	    
 	    rdc[dcNumber] = DC(// update rdc data
                 msg.sender,
@@ -812,7 +812,7 @@ contract lexDAORegistry is ScribeRole, ERC20 { // TLDR: internet-native market t
         ddrToken.transferFrom(client, address(this), payCap); // escrows payCap amount in approved ddrToken into TLDR for rddr payments and/or resolution
         RDDR = RDDR.add(1); // counts new entry to RDDR
     
-        rddr[ddrNumber] = DDR( // populate rddr data 
+            rddr[ddrNumber] = DDR( // populate rddr data 
                 client,
                 provider,
                 ddrToken,
