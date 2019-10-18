@@ -681,12 +681,19 @@ contract lexDAORegistry is ScribeRole, ERC20 { // TLDR: internet-native market t
     }
         
     // lexScribes can stake ether (Ξ) value for TLDR reputation and special TLDR function access (TLDR-write privileges, ethereal dispute resolution) 
-    function stakeReputation() payable public onlyScribe icedown {
+    function stakeETHreputation() payable public onlyScribe icedown {
         require(msg.value == 0.1 ether); // tenth of ether (Ξ) for staking reputation to lexDAO
         reputation[msg.sender] = 3; // sets / refreshes lexScribe reputation to '3' max value
         address(lexDAO).transfer(msg.value); // forwards staked value (Ξ) to designated lexDAO (0x) address
     }
-        
+    
+    // lexScribes can burn minted LEX value for TLDR reputation 
+    function stakeLEXreputation() public onlyScribe cooldown {
+        require(reputation[msg.sender] < 3); // program governance check / cannot repair reputation beyond max value
+        _burn(_msgSender(), 5000000000000000000); // 5 LEX burned 
+        reputation[msg.sender] = reputation[msg.sender].add(1); // repair reputation by "1"
+    }
+         
     // public check on lexScribe reputation status
     function isReputable(address x) public view returns (bool) { // returns true if lexScribe is reputable
         return reputation[x] > 0;
