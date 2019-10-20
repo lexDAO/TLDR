@@ -774,7 +774,6 @@ contract lexDAORegistry is ScribeRole, ERC20 { // TLDR: internet-native market t
         emit Enscribed(lexID, lexVersion, msg.sender);
     }
 
-    	
     /***************
     MARKET FUNCTIONS
     ***************/
