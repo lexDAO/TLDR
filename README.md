@@ -15,6 +15,10 @@ DDRs are essentially Ethereum escrow transactions that support any ERC-20 digita
 
 Practically, DDRs can be one-off transactions triggered by the client or consist of several releases at a *deliverable rate* from escrow over a set duration. Each DDR therefore has a *pay cap* that acts as a hard limit for the ERC-20 *digital dollar* amount escrowed in TLDR and paid under the deal as well as a *duration* timer that will release the escrow remainder to the paying *client* after termination.
 
+REGISTERED DIGITAL DOLLAR RETAINER ('1'):
+
+![rddr1](https://pbs.twimg.com/media/EG8skrqWsAESiQ3?format=png&name=900x900)
+
 ## DC
 
 DCs can be pledges, representations and/or warranties that Ethereum accounts might want to sign and associate around in order to access DAOs or other digital communities with participation rules. DC signatures can be revoked at will by each signatory, and are separately recorded for public inspection as *registered digital convenants*.
