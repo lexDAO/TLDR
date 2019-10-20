@@ -11,7 +11,7 @@ From our initial observations, we believe that blockchain-enabled deals primarly
 
 ## DDR
 
-DDRs are essentially Ethereum escrow transactions that support any ERC-20 digital token, where the public can initalize and record unique deal terms between a designated *client* and *provider* and then have the TLDR act as escrow agent and arbiter of their deal for such *registered digital dollar retainer*.
+DDRs are essentially Ethereum escrow transactions that support any ERC-20 digital token, where the public can initalize and record unique deal terms between a designated *client* and *provider* and then have the TLDR act as escrow agent and arbiter of their deal or, *registered digital dollar retainer*.
 
 Practically, DDRs can be one-off transactions triggered by the client or consist of several releases from escrow *by deliverable* over a set duration for a set rate. Each DDR therefore has a *pay cap* that acts as a hard limit for the ERC-20 *digital dollar* amount escrowed in TLDR and paid under the deal as well as a *duration* timer that will release the escrow remainder to the paying *client* after termination.
 
