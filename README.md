@@ -19,7 +19,7 @@ Practically, DDRs can be one-off transactions triggered by the client or consist
 
 ![registration](https://pbs.twimg.com/media/EG8p09EWkAEIhab?format=png&name=900x900)
 
-**REGISTERED DDR(RRDR, '1'):**
+**REGISTERED DDR (RRDR, '1'):**
 
 ![rddr1](https://pbs.twimg.com/media/EG8skrqWsAESiQ3?format=png&name=900x900)
 
@@ -27,7 +27,7 @@ Practically, DDRs can be one-off transactions triggered by the client or consist
 
 ![lexScript](https://pbs.twimg.com/media/EG8p09EW4AAJT2-?format=png&name=900x900)
 
-**RDDR FEE PAID TO LEXSCRIBE:**
+**RDDR FEE (LEXID 1 = 1%) PAID TO LEXSCRIBE:**
 
 ![lexFee](https://pbs.twimg.com/media/EG8skrrWoAAnlC8?format=png&name=900x900)
 
