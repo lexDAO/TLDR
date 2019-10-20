@@ -15,13 +15,33 @@ DDRs are essentially Ethereum escrow transactions that support any ERC-20 digita
 
 Practically, DDRs can be one-off transactions triggered by the client or consist of several releases at a *deliverable rate* from escrow over a set duration. Each DDR therefore has a *pay cap* that acts as a hard limit for the ERC-20 *digital dollar* amount escrowed in TLDR and paid under the deal as well as a *duration* timer that will release the escrow remainder to the paying *client* after termination.
 
-REGISTERED DIGITAL DOLLAR RETAINER ('1'):
+**DDR REGISTRATION:**
+
+![registration](https://pbs.twimg.com/media/EG8p09EWkAEIhab?format=png&name=900x900)
+
+**REGISTERED DDR(RRDR, '1'):**
 
 ![rddr1](https://pbs.twimg.com/media/EG8skrqWsAESiQ3?format=png&name=900x900)
+
+**IMPORTED LEXSCRIPT WRAPPER FOR RDDR (LEXID, '1'):**
+
+![lexScript](https://pbs.twimg.com/media/EG8p09EW4AAJT2-?format=png&name=900x900)
+
+**RDDR FEE PAID TO LEXSCRIBE:**
+
+![lexFee](https://pbs.twimg.com/media/EG8skrrWoAAnlC8?format=png&name=900x900)
 
 ## DC
 
 DCs can be pledges, representations and/or warranties that Ethereum accounts might want to sign and associate around in order to access DAOs or other digital communities with participation rules. DC signatures can be revoked at will by each signatory, and are separately recorded for public inspection as *registered digital convenants*.
+
+**DC Signature:**
+
+![dcSig](https://pbs.twimg.com/media/EG8muZeWoAAzYxl?format=png&name=240x240)
+
+**REGISTERED DIGITAL COVENANT:**
+
+![rdc](https://pbs.twimg.com/media/EG8nc2mWkAAbb_k?format=png&name=900x900)
 
 ## TLDR lexDAO Governance
 
@@ -46,6 +66,10 @@ lexScribes disbarred from TLDR by lexDAO governance lose access to uploading new
 ### Arbitration
 
 Reputable lexScribes within lexDAO are also able to resolve DDR disputes and claim a set 5% arbitration fee of the remaining DDR escrow for such TLDR service, offering more opportunities for lexDAO sustainability and reputation value. 
+
+**RESOLVED RDDR DISPUTE:**
+
+![arb](https://pbs.twimg.com/media/EG8skrsWwAEy-Ct?format=png&name=900x900)
 
 ## TLDR Solidity Design
 
