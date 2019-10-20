@@ -5,7 +5,7 @@ STEAL THIS C0D3SL4W
 
 TLDR is an interactive registry and market on Ethereum that allows anyone to select curated "lexScripts" for two main types of transactions:
 
-(1) **Digital Dollar Retainers (DDR)**, and (2) **Digital Covenants (DC)**
+**(1) Digital Dollar Retainers (DDR) & (2) Digital Covenants (DC)**
 
 From our initial observations, we believe that blockchain-enabled deals primarly fall into these categories and present immediate opportunities for utilizing transactional scripts (or, *smart contracts*) to scope out efficiency gains.
 
@@ -31,9 +31,11 @@ To incentivize quality contributions to TLDR, each DDR that imports a lexScript 
 
 For example, a DDR with a deliverable rate of "500 DAI" might pay 5 DAI on TLDR transactions to satisfy a "lexRate" of 1% ("100" as set within script).
 
+lexScribes disbarred from TLDR by lexDAO governance lose access to uploading new lexScript and such earning opportunities. 
+
 ### Arbitration
 
-Reputable lexScribes within lexDAO are also able to resolve DDR disputes and claim a set 5% arbitration fee of the remaining DDR escrow for such TLDR service, offering more opportunities for lexDAO sustainability. 
+Reputable lexScribes within lexDAO are also able to resolve DDR disputes and claim a set 5% arbitration fee of the remaining DDR escrow for such TLDR service, offering more opportunities for lexDAO sustainability and reputation value. 
 
 ## TLDR Solidity Design
 
