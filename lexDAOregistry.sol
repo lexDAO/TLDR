@@ -598,8 +598,8 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
 	
     // mapping for lexScribe reputation governance program
     mapping(address => uint256) public reputation; // mapping lexScribe reputation points 
-    mapping(address => uint256) public lastActionTimestamp; // mapping lexScribe governance actions (cooldown)
-    mapping(address => uint256) public lastSuperActionTimestamp; // mapping special lexScribe governance actions that require longer cooldown (icedown)
+    mapping(address => uint256) public lastActionTimestamp; // mapping Unix timestamp of lexScribe governance actions (cooldown)
+    mapping(address => uint256) public lastSuperActionTimestamp; // mapping Unix timestamp of special lexScribe governance actions that require longer cooldown (icedown)
     
     // mapping for stored lexScript wrappers and registered digital dollar retainers (DDR / rddr)
     mapping (uint256 => lexScriptWrapper) public lexScript; // mapping registered lexScript 'wet code' templates
@@ -631,7 +631,7 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
         IERC20 ddrToken; // ERC-20 digital token (0x) address used to transfer digital value on ethereum under rddr / e.g., DAI 'digital dollar' - 0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359
         string deliverable; // goods or services (deliverable) retained for benefit of ethereum payments
         string governingLawForum; // choice of law and forum for retainer relationship (or similar legal wrapper/context description)
-        uint256 lexID; // lexID number reference to include lexScriptWrapper reference for legal security / default '1' for generalized rddr lexScript template
+        uint256 lexID; // lexID number reference to include lexScriptWrapper for legal security / default '1' for generalized rddr lexScript template
         uint256 ddrNumber; // rddr number generated on DDR registration / identifies rddr for payDDR function calls
         uint256 timeStamp; // block.timestamp ("now") of registration used to calculate retainerTermination UnixTime
         uint256 retainerTermination; // termination date of rddr in UnixTime / locks payments to provider / after termination, allows withdrawal of remaining escrow digital value by client on payDDR function
