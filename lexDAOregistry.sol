@@ -594,7 +594,7 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
     // counters for lexScribe lexScriptWrapper and registered DDR (rddr) / DC (rdc)
     uint256 public LSW = 1; // number of lexScriptWrapper enscribed (starting from constructor tldr template)
     uint256 public RDC; // number of rdc
-    uint256 public RDDR; // number of rrdr 
+    uint256 public RDDR; // number of rddr
 	
     // mapping for lexScribe reputation governance program
     mapping(address => uint256) public reputation; // mapping lexScribe reputation points 
