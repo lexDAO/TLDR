@@ -580,7 +580,7 @@ contract ERC20 is Context, IERC20 {
 /***************
 TLDR CONTRACT
 ***************/
-contract lexDAORegistry is ScribeRole, ERC20 { // TLDR: internet-native market to wrap and enforce common deal patterns with legal and ethereal security
+contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market to wrap and enforce common deal patterns with legal and ethereal security
     using SafeMath for uint256;
     
     // lexDAO references for lexDAOscribe (lexScribe) reputation governance fees (Ξ)
