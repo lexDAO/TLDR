@@ -866,7 +866,7 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
 	ddr.disputed = true; // updates rddr value to reflect dispute status, "true"
     }
     
-    // reputable lexScribe can resolve rddr dispute with split of remaining payCap wei amount, claim 5% fee
+    // reputable lexScribe can resolve rddr dispute with division of remaining payCap amount (e.g., 2 = 50%), claim 5% fee
     function resolveDDR(uint256 ddrNumber, uint256 clientAward, uint256 providerAward) public {
         DDR storage ddr = rddr[ddrNumber]; // retrieve rddr data
 	
@@ -880,7 +880,7 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
         ddr.ddrToken.transfer(ddr.provider, providerAward); // executes ERC-20 award transfer to rddr provider
     	ddr.ddrToken.transfer(msg.sender, resolutionFee); // executes ERC-20 fee transfer to resolving lexScribe
     	
-	_mint(msg.sender, 1000000000000000000); // mint resolving lexScribe "1" LEX for contribution to TLDR
+    	_mint(msg.sender, 1000000000000000000); // mint resolving lexScribe "1" LEX for contribution to TLDR
     }
     
     // pay rddr on TLDR
@@ -897,12 +897,12 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
 	
     	if (now >= ddr.retainerTermination) { // *if* retainerDuration has terminated, client can reclaim payCap remainder ERC-20 balance from TLDR escrow
     	uint256 remainder = ddr.payCap.sub(ddr.paid); // derive rddr remainder
-    	ddr.ddrToken.transfer(ddr.client, remainder); // withdraws remainder of rddr escrow amount to client after termination 
-    	ddr.ddrToken.transferFrom(ddr.client, lS.lexAddress, lexFee); // executes ERC-20 transfer of lexFee to (0x) lexAddress identified in lexID   
+    	ddr.ddrToken.transfer(ddr.client, remainder.sub(lexFee)); // withdraws remainder of rddr escrow amount to client after termination 
+    	ddr.ddrToken.transfer(lS.lexAddress, lexFee); // executes ERC-20 transfer of lexFee to (0x) lexAddress identified in lexID   
     	}
 	
-    	ddr.ddrToken.transfer(ddr.provider, ddr.deliverableRate); // executes ERC-20 transfer to rddr provider in deliverableRate amount
-    	ddr.ddrToken.transferFrom(ddr.client, lS.lexAddress, lexFee); // executes ERC-20 transfer of lexFee to (0x) lexAddress identified in lexID
+    	ddr.ddrToken.transfer(ddr.provider, ddr.deliverableRate.sub(lexFee)); // executes ERC-20 transfer to rddr provider in deliverableRate amount
+    	ddr.ddrToken.transfer(lS.lexAddress, lexFee); // executes ERC-20 transfer of lexFee to (0x) lexAddress identified in lexID
     	ddr.paid = ddr.paid.add(ddr.deliverableRate); // tracks total ERC-20 wei amount paid under rddr / used to calculate rddr remainder
         emit Paid(ddr.ddrNumber, ddr.lexID); 
     }
