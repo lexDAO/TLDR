@@ -866,8 +866,8 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
 	ddr.disputed = true; // updates rddr value to reflect dispute status, "true"
     }
     
-    // reputable lexScribe can resolve rddr dispute with division of remaining payCap amount (e.g., 2 = 50%), claim 5% fee
-    function resolveDDR(uint256 ddrNumber, uint8 clientAwardRate, uint8 providerAwardRate) public {
+    // reputable lexScribe can resolve rddr dispute with split of remaining payCap wei amount, claim 5% fee
+    function resolveDDR(uint256 ddrNumber, uint256 clientAward, uint256 providerAward) public {
         DDR storage ddr = rddr[ddrNumber]; // retrieve rddr data
 	
         require(msg.sender != ddr.client); // program safety check / authorization / client cannot resolve own dispute as lexScribe
@@ -875,10 +875,9 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
         require(isReputable(msg.sender)); // program governance check / resolving lexScribe must be reputable
 	
         uint256 resolutionFee = ddr.payCap.sub(ddr.paid).div(20); // calculates 5% lexScribe dispute resolution fee
-        uint256 resolutionRate = ddr.payCap.sub(ddr.paid).sub(resolutionFee); // calculates resolution awards from rddr payCap remainder
 	
-        ddr.ddrToken.transfer(ddr.client, resolutionRate.div(clientAwardRate)); // executes ERC-20 award transfer to rddr client
-        ddr.ddrToken.transfer(ddr.provider, resolutionRate.div(providerAwardRate)); // executes ERC-20 award transfer to rddr provider
+        ddr.ddrToken.transfer(ddr.client, clientAward); // executes ERC-20 award transfer to rddr client
+        ddr.ddrToken.transfer(ddr.provider, providerAward); // executes ERC-20 award transfer to rddr provider
     	ddr.ddrToken.transfer(msg.sender, resolutionFee); // executes ERC-20 fee transfer to resolving lexScribe
     	
 	_mint(msg.sender, 1000000000000000000); // mint resolving lexScribe "1" LEX for contribution to TLDR
