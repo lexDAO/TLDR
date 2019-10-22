@@ -75,4 +75,6 @@ Reputable lexScribes within lexDAO are also able to resolve DDR disputes and cla
 
 ## TLDR Solidity Design
 
+[Contract Review](https://hackmd.io/@9imjf7czSc-9k0W4HcSANw/B1djOpjFS)
+
 WIP
