@@ -682,7 +682,7 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
     function addScribe(address account) public {
         require(msg.sender == lexDAO);
         _addScribe(account);
-	reputation[account] = 3;
+	reputation[account] = 1;
     }
     
     // lexDAO can remove lexScribe from TLDR / slash reputation
