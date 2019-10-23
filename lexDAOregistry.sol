@@ -828,6 +828,7 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
     	uint256 lexID) public {
     	require(lexID != (0)); // program safety check 
         require(deliverableRate <= payCap); // program safety check / economics
+	require(msg.sender == client || msg.sender == provider); // program safety check / authorization
         
 	uint256 ddrNumber = RDDR.add(1); // reflects new rddr value for inspection and client digital payments
         uint256 retainerTermination = now.add(retainerDuration); // rddr termination date in UnixTime, "now" block.timestamp + retainerDuration
