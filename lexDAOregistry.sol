@@ -678,19 +678,21 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
 	lastSuperActionTimestamp[msg.sender] = now; // block.timestamp, "now"
     }
     
+    // lexDAO can add new lexScribe to maintain TLDR
     function addScribe(address account) public {
         require(msg.sender == lexDAO);
         _addScribe(account);
 	reputation[account] = 3;
     }
     
+    // lexDAO can remove lexScribe from TLDR / slash reputation
     function removeScribe(address account) public {
         require(msg.sender == lexDAO);
         _removeScribe(account);
 	reputation[account] = 0;
     }
     
-    // lexDAO can update (0x) address receiving reputation governance stakes (Ξ) and managing lexScribe registry
+    // lexDAO can update (0x) address receiving reputation governance stakes (Ξ) / maintaining lexScribe registry
     function updateLexDAO(address payable newLexDAO) public {
     	require(msg.sender == lexDAO);
         require(newLexDAO != address(0)); // program safety check / newLexDAO cannot be "0" burn address
