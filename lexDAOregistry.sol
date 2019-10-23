@@ -258,10 +258,6 @@ contract ScribeRole is Context {
         return _Scribes.has(account);
     }
 
-    function addScribe(address account) public onlyScribe {
-        _addScribe(account);
-    }
-
     function renounceScribe() public {
         _removeScribe(_msgSender());
     }
@@ -665,7 +661,7 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
     
     /***************
     TLDR GOVERNANCE FUNCTIONS
-    ***************/
+    ***************/   
     // restricts lexScribe TLDR reputation governance function calls to once per day (cooldown)
     modifier cooldown() {
         require(now.sub(lastActionTimestamp[msg.sender]) > 1 days); // enforces cooldown period
@@ -681,6 +677,26 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
         
 	lastSuperActionTimestamp[msg.sender] = now; // block.timestamp, "now"
     }
+    
+    function addScribe(address account) public {
+        require(msg.sender == lexDAO);
+        _addScribe(account);
+	reputation[account] = 3;
+    }
+    
+    function removeScribe(address account) public {
+        require(msg.sender == lexDAO);
+        _removeScribe(account);
+	reputation[account] = 0;
+    }
+    
+    // lexDAO can update (0x) address receiving reputation governance stakes (Ξ) and managing lexScribe registry
+    function updateLexDAO(address payable newLexDAO) public {
+    	require(msg.sender == lexDAO);
+        require(newLexDAO != address(0)); // program safety check / newLexDAO cannot be "0" burn address
+        
+	lexDAO = newLexDAO; // update lexDAO (0x) address
+    }
         
     // lexScribes can stake ether (Ξ) value for TLDR reputation and special TLDR function access (TLDR-write privileges, rddr dispute resolution) 
     function stakeETHreputation() payable public onlyScribe icedown {
@@ -692,12 +708,10 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
     }
     
     // lexScribes can burn minted LEX value for TLDR reputation 
-    function stakeLEXreputation() public onlyScribe cooldown {
-        require(reputation[msg.sender] < 3); // program governance check / cannot repair reputation beyond max value
+    function stakeLEXreputation() public onlyScribe icedown { 
+	_burn(_msgSender(), 10000000000000000000); // 10 LEX burned 
         
-	_burn(_msgSender(), 5000000000000000000); // 5 LEX burned 
-        
-	reputation[msg.sender] = reputation[msg.sender].add(1); // repair TLDR reputation by "1"
+	reputation[msg.sender] = 3; // sets / refreshes lexScribe reputation to '3' max value, 'three strikes, you're out'
     }
          
     // public check on lexScribe reputation status
@@ -722,15 +736,7 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
         
 	reputation[repairedLexScribe] = reputation[repairedLexScribe].add(1); // repair reputation by "1"
     }
-    
-    // fully reputable lexScribe can update lexDAO (0x) address receiving reputation governance stakes (Ξ) within icedown period
-    function updateLexDAO(address payable newLexDAO) icedown public {
-        require(newLexDAO != address(0)); // program safety check / newLexDAO cannot be "0" burn address
-        require(reputation[msg.sender] == 3); // program governance check / only fully reputable lexScribes can update lexDAO (0x) address
-        
-	lexDAO = newLexDAO; // update lexDAO (0x) address
-    }
-        
+       
     /***************
     LEXSCRIBE FUNCTIONS
     ***************/
