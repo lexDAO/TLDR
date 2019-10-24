@@ -790,7 +790,7 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
 	lexScriptWrapper storage lS = lexScript[lexID]; // retrieve LSW data
 	
 	uint256 dcNumber = RDC.add(1); // reflects new rdc value for public inspection and signature revocation
-	bool revoked = false; // initialized value of rdc, "false"
+	bool revoked = false; // initialized value of rdc revocation status, "false"
 	RDC = RDC.add(1); // counts new entry to RDC
 	        
 	    rdc[dcNumber] = DC( // populate rdc data
