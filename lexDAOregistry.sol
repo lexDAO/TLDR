@@ -583,6 +583,9 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
     address payable public lexDAO;
 	
     // lexDAO (LEX) ERC-20 token references for public inspection
+    address public lexContractAddress = address(this);
+    ERC20 lexContract = ERC20(lexContractAddress); 
+    
     string public name = "lexDAO";
     string public symbol = "LEX";
     uint8 public decimals = 18;
@@ -885,6 +888,7 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
         require(msg.sender != ddr.client); // program safety check / authorization / client cannot resolve own dispute as lexScribe
         require(msg.sender != ddr.provider); // program safety check / authorization / provider cannot resolve own dispute as lexScribe
         require(isReputable(msg.sender)); // program governance check / resolving lexScribe must be reputable
+	require(balanceOf(msg.sender) >= 5000000000000000000); // program governance check / resolving lexScribe must have at least "5" LEX balance
 	
         uint256 resolutionFee = ddRemainder.div(20); // calculates 5% lexScribe dispute resolution fee
 	uint256 resolutionFeeSplit = resolutionFee.div(2); // calculates resolution fee split between client and provider
