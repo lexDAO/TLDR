@@ -576,7 +576,7 @@ contract ERC20 is Context, IERC20 {
 /***************
 TLDR CONTRACT
 ***************/
-contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market to wrap and enforce common deal patterns with legal and ethereal security
+contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market to wrap & enforce common deal patterns with legal & ethereal security
     using SafeMath for uint256;
     
     // lexDAO references for lexDAOscribe (lexScribe) reputation governance fees (Ξ)
@@ -624,7 +624,7 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
     struct DDR { // Digital Dollar Retainer created on lexScript terms maintained by lexScribes / data for registration 
         address client; // rddr client (0x) address
         address provider; // provider (0x) address that receives ERC-20 payments in exchange for goods or services
-        IERC20 ddrToken; // ERC-20 digital token (0x) address used to transfer digital value on ethereum under rddr / e.g., DAI 'digital dollar' - 0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359
+        ERC20 ddrToken; // ERC-20 digital token (0x) address used to transfer digital value on ethereum under rddr / e.g., DAI 'digital dollar' - 0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359
         string deliverable; // goods or services (deliverable) retained for benefit of ethereum payments
         string governingLawForum; // choice of law and forum for retainer relationship (or similar legal wrapper/context description)
         uint256 lexID; // lexID number reference to include lexScriptWrapper for legal security / default '1' for generalized rddr lexScript template
@@ -827,7 +827,7 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
     function registerDDR( // rddr 
     	address client,
     	address provider,
-    	IERC20 ddrToken,
+    	ERC20 ddrToken,
     	string memory deliverable,
     	string memory governingLawForum,
         uint256 retainerDuration,
@@ -875,18 +875,22 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
 	ddr.disputed = true; // updates rddr value to reflect dispute status, "true"
     }
     
-    // reputable lexScribe can resolve rddr dispute with division of remaining payCap amount (e.g., 2 = 50%), claim 5% fee
+    // reputable lexScribe can resolve rddr dispute with division of remaining payCap amount in wei accounting for 5% fee
     function resolveDDR(uint256 ddrNumber, uint256 clientAward, uint256 providerAward) public {
         DDR storage ddr = rddr[ddrNumber]; // retrieve rddr data
 	
+	uint256 ddRemainder = ddr.payCap.sub(ddr.paid); // alias remainder rddr wei amount for rddr resolution reference
+	
+	require(clientAward.add(providerAward) == ddRemainder); // program safety check / economics
         require(msg.sender != ddr.client); // program safety check / authorization / client cannot resolve own dispute as lexScribe
         require(msg.sender != ddr.provider); // program safety check / authorization / provider cannot resolve own dispute as lexScribe
         require(isReputable(msg.sender)); // program governance check / resolving lexScribe must be reputable
 	
-        uint256 resolutionFee = ddr.payCap.sub(ddr.paid).div(20); // calculates 5% lexScribe dispute resolution fee
+        uint256 resolutionFee = ddRemainder.div(20); // calculates 5% lexScribe dispute resolution fee
+	uint256 resolutionFeeSplit = resolutionFee.div(2); // calculates resolution fee split between client and provider
 	
-        ddr.ddrToken.transfer(ddr.client, clientAward); // executes ERC-20 award transfer to rddr client
-        ddr.ddrToken.transfer(ddr.provider, providerAward); // executes ERC-20 award transfer to rddr provider
+        ddr.ddrToken.transfer(ddr.client, clientAward.sub(resolutionFeeSplit)); // executes ERC-20 award transfer to rddr client
+        ddr.ddrToken.transfer(ddr.provider, providerAward.sub(resolutionFeeSplit)); // executes ERC-20 award transfer to rddr provider
     	ddr.ddrToken.transfer(msg.sender, resolutionFee); // executes ERC-20 fee transfer to resolving lexScribe
     	
     	_mint(msg.sender, 1000000000000000000); // mint resolving lexScribe "1" LEX for contribution to TLDR
