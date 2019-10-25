@@ -12,6 +12,7 @@ DEAR MSG.SENDER(S):
 
 || lexDAO || 
 ~presented by Open, ESQ LLC_DAO~
+< https://mainnet.aragon.org/#/openesquire/ >
 */
 
 pragma solidity 0.5.9;
