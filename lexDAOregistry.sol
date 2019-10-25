@@ -938,7 +938,6 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
     function withdrawDDR(uint256 ddrNumber) public { // releases escrowed ddrToken deliverableRate amount to provider (0x) address / lexFee for attached lexID lexAddress
     	DDR storage ddr = rddr[ddrNumber]; // retrieve rddr data
 	
-    	require(ddr.resolvable = false);
     	require(now >= ddr.retainerTermination); // program safety check / time
     	require(address(msg.sender) == ddr.client); // program safety check / authorization
     	
