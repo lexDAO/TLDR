@@ -890,7 +890,7 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
 	ddr.disputed = true; // updates rddr value to reflect dispute status, "true"
     }
     
-    // reputable lexScribe can resolve rddr dispute with division of remaining payCap amount in wei accounting for 5% fee
+    // reputable lexScribe can resolve rddr dispute with division of remaining payCap amount in wei / receive 5% fee
     function resolveDDR(uint256 ddrNumber, uint256 clientAward, uint256 providerAward) public {
         DDR storage ddr = rddr[ddrNumber]; // retrieve rddr data
 	
@@ -911,7 +911,7 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
     	
     	_mint(msg.sender, 1000000000000000000); // mint resolving lexScribe "1" LEX for contribution to TLDR
 	
-	ddr.paid = ddr.paid.add(ddRemainder);
+	ddr.paid = ddr.paid.add(ddRemainder); // tallies remainder to paid wei amount to reflect closure
     }
     
     // pay rddr on TLDR
@@ -947,6 +947,6 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
 	
     	ddr.ddrToken.transfer(ddr.client, remainder); // executes ERC-20 transfer to rddr provider in deliverableRate amount
     	
-    	ddr.paid = ddr.paid.add(remainder);
+    	ddr.paid = ddr.paid.add(remainder); // tallies remainder to paid wei amount to reflect closure
     }
 }
