@@ -865,6 +865,18 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
         	 
         emit Registered(lexID, ddrNumber); 
     }
+         
+    // rddr client can delegate performance management function and beneficiary status (designed for limited grant applications, milestone-watching)
+    function delegateDDRclient(uint256 ddrNumber, address clientDelegate) public {
+        DDR storage ddr = rddr[ddrNumber]; // retrieve rddr data
+        
+        require(ddr.disputed == false); // program safety check / status
+        require (now <= ddr.retainerTermination); // program safety check / time
+        require(msg.sender == ddr.client); // program safety check / authorization
+        require(ddr.paid < ddr.payCap); // program safety check / economics
+        
+        ddr.client = clientDelegate; // update rddr client address to delegate
+    }
     
     // rddr parties can initiate dispute and lock escrowed remainder of rddr payCap in TLDR until resolution by reputable lexScribe
     function disputeDDR(uint256 ddrNumber) public {
