@@ -641,7 +641,7 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
         bool disputed; // tracks digital dispute status from client or provider / if called, locks remainder of escrow rddr payments for reputable lexScribe resolution
     }
     	
-    constructor(string memory tldrTerms, uint256 tldrLexRate, address tldrLexAddress, address payable tldrLexDAO) public { // deploys TLDR contract with designated lexRate and lexAddress (0x) and stores base lexScript template "1" (lexID)
+    constructor(string memory tldrTerms, uint256 tldrLexRate, address tldrLexAddress, address payable tldrLexDAO) public { // deploys TLDR contract with designated lexRate / lexAddress (0x) & stores base lexScript template "1" (lexID)
 	address lexScribe = msg.sender; // TLDR summoner is lexScribe
 	reputation[msg.sender] = 3; // sets TLDR summoner lexScribe reputation to '3' max value on construction
 	lexDAO = tldrLexDAO; // lexDAO (0x) address as constructed
@@ -735,7 +735,7 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
         
     // reputable lexScribes can repair each other's reputation within cooldown period
     function repairScribeRep(address repairedLexScribe) cooldown public {
-        require(isReputable(msg.sender)); // lexScribe must be reputable
+        require(isReputable(msg.sender)); // program governance check / lexScribe must be reputable
         require(msg.sender != repairedLexScribe); // program governance check / cannot repair own reputation
         require(reputation[repairedLexScribe] < 3); // program governance check / cannot repair fully reputable lexScribe
         require(reputation[repairedLexScribe] > 0); // program governance check / cannot repair disreputable lexScribe / induct non-staked lexScribe
@@ -891,7 +891,7 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
 	ddr.disputed = true; // updates rddr value to reflect dispute status, "true"
     }
     
-    // reputable lexScribe can resolve rddr dispute with division of remaining payCap amount in wei / receive 5% fee
+    // reputable lexScribe can resolve rddr dispute with division of remaining payCap amount in wei / receive 5% fee / receive LEX mint, "1"
     function resolveDDR(uint256 ddrNumber, uint256 clientAward, uint256 providerAward) public {
         DDR storage ddr = rddr[ddrNumber]; // retrieve rddr data
 	
@@ -912,7 +912,7 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
     	
     	_mint(msg.sender, 1000000000000000000); // mint resolving lexScribe "1" LEX for contribution to TLDR
 	
-	ddr.paid = ddr.paid.add(ddRemainder); // tallies remainder to paid wei amount to reflect closure
+	ddr.paid = ddr.paid.add(ddRemainder); // tallies remainder to paid wei amount to reflect rddr closure
     }
     
     // pay rddr on TLDR
@@ -935,7 +935,7 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
     }
     
     // withdraw rddr remainder on TLDR after termination
-    function withdrawDDR(uint256 ddrNumber) public { // releases escrowed ddrToken deliverableRate amount to provider (0x) address / lexFee for attached lexID lexAddress
+    function withdrawDDR(uint256 ddrNumber) public { // releases escrowed ddrToken deliverableRate amount to provider (0x) address 
     	DDR storage ddr = rddr[ddrNumber]; // retrieve rddr data
 	
     	require(now >= ddr.retainerTermination); // program safety check / time
@@ -945,8 +945,8 @@ contract lexDAOregistry is ScribeRole, ERC20 { // TLDR: internet-native market t
     	
     	require(remainder > 0); // program safety check / economics
 	
-    	ddr.ddrToken.transfer(ddr.client, remainder); // executes ERC-20 transfer to rddr provider in deliverableRate amount
+    	ddr.ddrToken.transfer(ddr.client, remainder); // executes ERC-20 transfer to rddr provider in escrow remainder amount
     	
-    	ddr.paid = ddr.paid.add(remainder); // tallies remainder to paid wei amount to reflect closure
+    	ddr.paid = ddr.paid.add(remainder); // tallies remainder to paid wei amount to reflect rddr closure
     }
 }
