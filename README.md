@@ -47,7 +47,7 @@ DCs can be pledges, representations and/or warranties that Ethereum accounts mig
 
 ## TLDR lexDAO Governance
 
-TLDR lexScript is maintained by lexScribes who admit each other as *lexDAO* participants. 
+TLDR lexScript is maintained by lexScribes who admit each other as *lexDAO* participants through a membership DAO and 'agent' program on Aragon that controls the addScribe function on TLDR.
 
 In order to boost lexScript contributions and good stewardship of related disputes, TLDR implements a minimal DAO design inspired by Manuel Araoz *[digital violence](https://maraoz.com/2019/02/11/digital-life/)*, wherein, participants police each other's reputation points and can effectively *disbar* or kill off unruly lexScribes from their digital association when such balance hits zero.
 
