@@ -3,7 +3,7 @@ STEAL THIS C0D3SL4W
 # The lexDAO Registry ✒️ TLDR
 > Transactional Scripts for Legal and Ethereal Deal Security
 
-🛠️ [Ethereum (Rinkeby) Testnet Deployment](https://rinkeby.etherscan.io/dapp/0x9e709c8b853bbeedf0482d4861374f05461743f6#readContract) ⚡
+🛠️ [Ethereum Mainnet Deployment](https://etherscan.io/address/0x62195CFdA73F99e1BFF4881FDCFbF5c9576d3c88) ⚡
 
 TLDR is an interactive registry and market on Ethereum that allows anyone to select curated legal wrappers or *lexScript* for two main types of transactions also hosted by TLDR programming:
 
