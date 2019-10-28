@@ -8,6 +8,7 @@
 | Joshua Ma | [`0xf290f3d843826d00f8176182fd76550535f6dbb4`](https://etherscan.io/address/0xf290f3d843826d00f8176182fd76550535f6dbb4) | 0 | 
 | Alex Fagella | [`0x756CE9C56B02f05b5FaFfaFc707B552bEDce83eE`](https://etherscan.io/address/0x756ce9c56b02f05b5faffafc707b552bedce83ee) | 1 | 
 | Esen Esener | [`0xC2d6416F5BE67AaCBcd516580b36D06884E3A2E1`](https://etherscan.io/address/0xC2d6416F5BE67AaCBcd516580b36D06884E3A2E1) | 0 | 
+| Dmitry Narozhny | [`0x1bc9e52bAa93Dab1a47c3168f6d82ED08856Ec83`](https://etherscan.io/address/0x1bc9e52bAa93Dab1a47c3168f6d82ED08856Ec83) | 0 |
 
 ## Transactions
 
