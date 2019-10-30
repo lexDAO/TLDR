@@ -77,4 +77,6 @@ Reputable lexScribes within lexDAO are also able to resolve DDR disputes and cla
 
 [v0.1 Contract Review](https://hackmd.io/@9imjf7czSc-9k0W4HcSANw/B1djOpjFS)
 
-![tldrSolidityMAP](https://pbs.twimg.com/media/EIFCRVbWsAE7bVn?format=png&name=4096x4096)
+v0.2 Solidity Map: https://etherscan.io/viewsvg?t=1&a=0x77eca7e76fbeb9c33d3ef0664f2b333205d48a77
+
+![tldrSolidityMAP](https://storage.googleapis.com/sol2uml-storage/mainnet-0x77eca7e76fbeb9c33d3ef0664f2b333205d48a77.svg)
