@@ -1,0 +1,4 @@
+## Digital Dollar Retainer
+#### *0x77ECa7e76fbEb9C33D3ef0664f2b333205d48a77*
+
+Establishing a digital retainer hereby as [[*ddrNumber*]] and acknowledging mutual consideration and agreement, Client, identified by Ethereum address 0x[[*client*]], commits to make prompt payments under the TLDR transactional script capped at [[*payCap*]] digital dollar value denominated in units of 0x[[*ddrToken*]] for the benefit of Provider, identified by Ethereum address 0x[[*provider*]], in exchange for prompt satisfaction of the following, [[*deliverable*]], to Client by Provider, upon scripted payments set at the rate of [[*deliverableRate*]] digital dollars per deliverable, with such retainer relationship not to exceed [[*retainerDuration*]] seconds and to be governed by the choice of New York law and either/or arbitration rules administered by a lexScribe account registered on the TLDR Ethereum address listed above.
