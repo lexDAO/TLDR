@@ -1,4 +1,13 @@
 import React, { Component } from "react";
+import {
+  Button,
+  Divider,
+  Header,
+  Container,
+  Form,
+  Segment
+} from "semantic-ui-react";
+import TextareaAutosize from "react-textarea-autosize";
 import SimpleStorageContract from "./contracts/SimpleStorage.json";
 import getWeb3 from "./utils/getWeb3";
 
@@ -20,7 +29,7 @@ class App extends Component {
       const deployedNetwork = SimpleStorageContract.networks[networkId];
       const instance = new web3.eth.Contract(
         SimpleStorageContract.abi,
-        deployedNetwork && deployedNetwork.address,
+        deployedNetwork && deployedNetwork.address
       );
 
       // Set web3, accounts, and contract to the state, and then proceed with an
@@ -29,7 +38,7 @@ class App extends Component {
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
-        `Failed to load web3, accounts, or contract. Check console for details.`,
+        `Failed to load web3, accounts, or contract. Check console for details.`
       );
       console.error(error);
     }
@@ -54,17 +63,31 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <h1>Good to Go!</h1>
-        <p>Your Truffle Box is installed and ready.</p>
-        <h2>Smart Contract Example</h2>
-        <p>
-          If your contracts compiled and migrated successfully, below will show
-          a stored value of 5 (by default).
-        </p>
-        <p>
-          Try changing the value stored on <strong>line 40</strong> of App.js.
-        </p>
-        <div>The stored value is: {this.state.storageValue}</div>
+        <Container>
+          <Divider hidden />
+          <Header as="h1">🖋️ TLDR</Header>
+          <Header as="h3">The lexDAO Registry</Header>
+
+          <Segment>
+            <Form>
+              <Form.Field>
+                <label>Lex Address (who do the payments go to?)</label>
+                <input placeholder="0x0000000000000000000000000000000000000000" />
+              </Form.Field>
+              <Form.Field>
+                <label>Lex Rate (1 = 0.01%)</label>
+                <input placeholder="0" />
+              </Form.Field>
+              <Form.Field
+                control={TextareaAutosize}
+                label="Template Terms"
+                placeholder="Your Template Here..."
+                useCacheForDOMMeasurements
+              />
+              <Button type="submit">Submit</Button>
+            </Form>
+          </Segment>
+        </Container>
       </div>
     );
   }

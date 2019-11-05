@@ -15,7 +15,7 @@ DEAR MSG.SENDER(S):
 < https://mainnet.aragon.org/#/openesquire/ >
 */
 
-pragma solidity 0.5.9;
+pragma solidity 0.5.8;
 
 /***************
 OPENZEPPELIN REFERENCE CONTRACTS - SafeMath, ScribeRole, ERC-20 transactional scripts
