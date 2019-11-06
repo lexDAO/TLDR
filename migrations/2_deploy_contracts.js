@@ -1,8 +1,7 @@
 var SimpleStorage = artifacts.require("./SimpleStorage.sol");
 var TLDR = artifacts.require("./TLDR.sol");
 
-module.exports = async function(deployer) {
-  const addresses = await web3.eth.getAccounts()
+module.exports = function(deployer) {
   deployer.deploy(SimpleStorage);
-  deployer.deploy(TLDR, "This is a contract", 1, addresses[0], addresses[0]);
- };
+  deployer.deploy(TLDR, "this is a test template", 1, "0x3a107B0ca6D466e1668620bF71d84F8B5744BCB1", "0x3a107B0ca6D466e1668620bF71d84F8B5744BCB1")
+};

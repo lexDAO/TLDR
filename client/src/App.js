@@ -5,7 +5,8 @@ import {
   Header,
   Container,
   Form,
-  Segment
+  Segment,
+  Input
 } from "semantic-ui-react";
 import TextareaAutosize from "react-textarea-autosize";
 import TLDRContract from "./contracts/TLDR.json";
@@ -16,6 +17,9 @@ export default function App() {
   const [web3, setWeb3] = useState(0);
   const [accounts, setAccounts] = useState();
   const [contract, setContract] = useState();
+  const [template, setTemplate] = useState();
+  const [rate, setRate] = useState();
+  const [lexAddress, setLexAddress] = useState();
 
   const fetchData = async () => {
     try {
@@ -32,7 +36,9 @@ export default function App() {
         TLDRContract.abi,
         deployedNetwork && deployedNetwork.address
       );
-      setWeb3(web3)
+
+      console.log(instance)
+      setWeb3(web3);
       setAccounts(accounts);
       setContract(instance);
     } catch (error) {
@@ -41,20 +47,18 @@ export default function App() {
       );
       console.error(error);
     }
-  }
+  };
   useEffect(() => {
-    fetchData()
+    fetchData();
   });
 
   const submitLS = async () => {
-    // Stores a given value, 5 by default.
-    await contract.methods.set(5).send({ from: accounts[0] });
+    console.log(template, rate, lexAddress)
+    await contract.methods.writeLexScript(template, rate, lexAddress).send({ from: accounts[0], gas: 3000000 });
 
     // Get the value from the contract to prove it worked.
-    const response = await contract.methods.get().call();
-
-    // Update state with the result.
-    this.setState({ storageValue: response });
+    const response = await contract.methods.lexScript(1).call();
+    console.log(response)
   };
 
   if (!web3) {
@@ -71,21 +75,29 @@ export default function App() {
 
         <Segment>
           <Form>
-            <Form.Field>
-              <label>Lex Address (who do the payments go to?)</label>
-              <input placeholder="0x0000000000000000000000000000000000000000" />
-            </Form.Field>
-            <Form.Field>
-              <label>Lex Rate (1 = 0.01%)</label>
-              <input placeholder="0" />
-            </Form.Field>
+            <Form.Field
+              control={Input}
+              placeholder="0x0000000000000000000000000000000000000000"
+              label="Lex Address (who do the payments go to?)"
+              value={lexAddress}
+              onChange={e => setLexAddress(e.target.value)}
+            />
+            <Form.Field
+              control={Input}
+              placeholder="0"
+              label="Lex Rate (1 = 0.01%)"
+              value={rate}
+              onChange={e => setRate(e.target.value)}
+            />
             <Form.Field
               control={TextareaAutosize}
               label="Template Terms"
+              value={template}
+              onChange={e => setTemplate(e.target.value)}
               placeholder="Your Template Here..."
               useCacheForDOMMeasurements
             />
-            <Button type="submit">Submit</Button>
+            <Button type="submit" onClick={submitLS}>Submit</Button>
           </Form>
         </Segment>
       </Container>

@@ -58859,12 +58859,18 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xC06c7EfC93B874415eFE77eCdB6875cFcC3c6Ce8",
-      "transactionHash": "0x564b760d960cea48258e20f6bc2461e53a7f8405e68506533fe45244d02a64e1"
+      "address": "0xe2830Dabe1639b3bA2eD7Cce66969B978DDD00aF",
+      "transactionHash": "0xd29aedcdc338c6c7ac58c435f65e376d9df1860258269997b31b9663ebc3e297"
+    },
+    "4": {
+      "events": {},
+      "links": {},
+      "address": "0x340a564b63556B43838FbCa56e2Dc1028A277f74",
+      "transactionHash": "0x9e4aef30116506e4f85348b3df40a33cda9a8a3c87aaf3e09fa3c711d857a2e5"
     }
   },
   "schemaVersion": "3.0.11",
-  "updatedAt": "2019-11-05T06:41:36.967Z",
+  "updatedAt": "2019-11-06T05:37:22.508Z",
   "devdoc": {
     "methods": {
       "allowance(address,address)": {
