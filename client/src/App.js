@@ -6,7 +6,8 @@ import {
   Container,
   Form,
   Segment,
-  Input
+  Input,
+  Message
 } from "semantic-ui-react";
 import TextareaAutosize from "react-textarea-autosize";
 import TLDRContract from "./contracts/TLDR.json";
@@ -20,6 +21,8 @@ export default function App() {
   const [template, setTemplate] = useState();
   const [rate, setRate] = useState();
   const [lexAddress, setLexAddress] = useState();
+  const [lexScriptID, setlexID] = useState();
+  const [lexScript, setLexScript] = useState();
 
   const fetchData = async () => {
     try {
@@ -36,8 +39,6 @@ export default function App() {
         TLDRContract.abi,
         deployedNetwork && deployedNetwork.address
       );
-
-      console.log(instance)
       setWeb3(web3);
       setAccounts(accounts);
       setContract(instance);
@@ -53,12 +54,14 @@ export default function App() {
   });
 
   const submitLS = async () => {
-    console.log(template, rate, lexAddress)
-    await contract.methods.writeLexScript(template, rate, lexAddress).send({ from: accounts[0], gas: 3000000 });
+    await contract.methods
+      .writeLexScript(template, rate, lexAddress)
+      .send({ from: accounts[0], gas: 3000000 });
+  };
 
-    // Get the value from the contract to prove it worked.
-    const response = await contract.methods.lexScript(1).call();
-    console.log(response)
+  const getLex = async () => {
+    const lexScript = await contract.methods.lexScript(lexScriptID).call();
+    setLexScript(lexScript.templateTerms);
   };
 
   if (!web3) {
@@ -71,9 +74,11 @@ export default function App() {
         <Header size="huge" as="h1">
           🖋️ TLDR
         </Header>
-        <Header as="h3">The lexDAO Registry</Header>
+        <Header as="h2">The lexDAO Registry</Header>
 
         <Segment>
+        <Header as="h3">Submit a LexScript</Header>
+
           <Form>
             <Form.Field
               control={Input}
@@ -97,8 +102,26 @@ export default function App() {
               placeholder="Your Template Here..."
               useCacheForDOMMeasurements
             />
-            <Button type="submit" onClick={submitLS}>Submit</Button>
+            <Button type="submit" onClick={submitLS}>
+              Submit
+            </Button>
           </Form>
+        </Segment>
+        <Segment>
+        <Header as="h3">Read a LexScript</Header>
+          <Form>
+            <Form.Field
+              control={Input}
+              placeholder="1"
+              label="LexScript ID"
+              value={lexScriptID}
+              onChange={e => setlexID(e.target.value)}
+            />
+            <Button type="submit" onClick={getLex}>
+              Submit
+            </Button>
+          </Form>
+          {lexScript && <Message>{lexScript}</Message>}
         </Segment>
       </Container>
     </div>

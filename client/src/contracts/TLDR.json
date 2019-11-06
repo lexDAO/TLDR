@@ -58867,6 +58867,12 @@
       "links": {},
       "address": "0x340a564b63556B43838FbCa56e2Dc1028A277f74",
       "transactionHash": "0x9e4aef30116506e4f85348b3df40a33cda9a8a3c87aaf3e09fa3c711d857a2e5"
+    },
+    "1": {
+      "events": {},
+      "links": {},
+      "address": "0x77ECa7e76fbEb9C33D3ef0664f2b333205d48a77",
+      "transactionHash": "0x99cf39fc752c2ac4eabaa3113513c34a82ae6c4b6c7c73deb7dc896cb222fe8f"
     }
   },
   "schemaVersion": "3.0.11",
