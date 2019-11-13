@@ -1,5 +1,7 @@
 # [lexDAO](https://etherscan.io/address/0x77ECa7e76fbEb9C33D3ef0664f2b333205d48a77)
 
+[Aragon Digital Organization](https://mainnet.aragon.org/#/lexdao/0xc191dc522672e10441bb9ee7c58946e9a8ebe4c0/)
+
 ## lexScribes
 | Name | Ethereum Address | [LEX](https://etherscan.io/token/0x77ECa7e76fbEb9C33D3ef0664f2b333205d48a77) | 
 |----------|:-------------:|:-------------:| 
