@@ -61,7 +61,7 @@ export default function Register({ web3, accounts, contract }) {
               Submit
             </Button>
           </Form>
-          <Message style={{ height: "33.5vh" }}>
+          <Message color={"teal"} style={{ minHeight: "33.5vh" }}>
             {lexScript ? lexScript : "Please select a LexScript ID first"}
           </Message>
         </Grid.Column>

@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Divider,
-  Header,
-  Container,
-  Tab
-} from "semantic-ui-react";
+import { Divider, Header, Container, Tab } from "semantic-ui-react";
 import TLDRContract from "./contracts/TLDR.json";
 import getWeb3 from "./utils/getWeb3";
 import "./App.css";
@@ -42,6 +37,8 @@ export default function App() {
     }
   };
   useEffect(() => {
+    document.body.style.backgroundImage =
+      "linear-gradient(180deg, hsla(0, 0%, 100%, 0) 60%, #fff),linear-gradient(70deg, #dbedff 32%, #ebfff0)";
     fetchData();
   });
 
@@ -51,7 +48,8 @@ export default function App() {
       render: () => (
         <Tab.Pane
           style={{
-            backgroundImage: "linear-gradient(to right, #fff8f2 , white)"
+            backgroundImage:
+              "linear-gradient(to right, rgba(150, 249, 222, 0.1), rgba(219, 237, 255, 0.3))"
           }}
         >
           <Submit web3={web3} accounts={accounts} contract={contract} />
@@ -62,9 +60,10 @@ export default function App() {
       menuItem: "Register DDR",
       render: () => (
         <Tab.Pane
-          style={{
-            backgroundImage: "linear-gradient(to right, #fff8f2 , white)"
-          }}
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, rgba(150, 249, 222, 0.1), rgba(219, 237, 255, 0.3))"
+        }}
         >
           <Register web3={web3} accounts={accounts} contract={contract} />
         </Tab.Pane>
@@ -79,11 +78,15 @@ export default function App() {
     <div className="App">
       <Container>
         <Divider hidden />
-        <Header size="huge" as="h1">
+        <Header as="h1" color="grey" size="huge">
           🖋️ TLDR
         </Header>
-        <Header as="h2">The lexDAO Registry</Header>
-        <Tab menu={{}} panes={panes} style={{paddingTop:"25px"}}/>
+        <Header as="h2" color="grey">The lexDAO Registry</Header>
+        <Tab
+          menu={{ tabular: true }}
+          panes={panes}
+          style={{ paddingTop: "25px" }}
+        />
       </Container>
     </div>
   );
