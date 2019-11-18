@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Button, Header, Form, Segment, Input, Message } from "semantic-ui-react";
+import {
+  Button,
+  Header,
+  Form,
+  Segment,
+  Input,
+  Message,
+  Grid
+} from "semantic-ui-react";
 
 export default function Register({ web3, accounts, contract }) {
   // Read LexScript Template
@@ -18,7 +26,6 @@ export default function Register({ web3, accounts, contract }) {
     const lexScript = await contract.methods.lexScript(lexScriptID).call();
     setLexScript(lexScript.templateTerms);
   };
-
 
   const registerDDR = async () => {
     const res = await contract.methods
@@ -39,72 +46,76 @@ export default function Register({ web3, accounts, contract }) {
 
   return (
     <>
-      <Segment>
-        <Header as="h3">Select/Read a LexScript</Header>
-        <Form>
-          <Form.Field
-            control={Input}
-            placeholder="1"
-            label="LexScript ID"
-            value={lexScriptID}
-            onChange={e => setlexID(e.target.value)}
-          />
-          <Button type="submit" onClick={getLex}>
-            Submit
-          </Button>
-        </Form>
-        {lexScript && <Message>{lexScript}</Message>}
-      </Segment>
-      <Segment>
-        <Header as="h3">Register a DDR</Header>
-        <Form>
-          <Form.Field
-            control={Input}
-            placeholder="0x0000000000000000000000000000000000000000"
-            label="Provider Address"
-            value={provider}
-            onChange={e => setProvider(e.target.value)}
-          />
-          <Form.Field
-            control={Input}
-            placeholder="0x0000000000000000000000000000000000000000"
-            label="DDR Token Address"
-            value={DDRToken}
-            onChange={e => setDDRToken(e.target.value)}
-          />
-          <Form.Field
-            control={Input}
-            label="Deliverable Description"
-            placeholder="Description..."
-            value={deliverable}
-            onChange={e => setDeliverable(e.target.value)}
-          />
-          <Form.Field
-            control={Input}
-            placeholder="1"
-            label="Retainer Duration (days)"
-            value={retainerDuration}
-            onChange={e => setRetinerDuration(e.target.value)}
-          />
-          <Form.Field
-            control={Input}
-            placeholder="1"
-            label="Deliverable Rate"
-            value={deliverableRate}
-            onChange={e => setDeliverableRate(e.target.value)}
-          />
-          <Form.Field
-            control={Input}
-            placeholder="1 ETH"
-            label="Pay Cap (in ETH)"
-            value={payCap}
-            onChange={e => setPayCap(e.target.value)}
-          />
-          <Button type="submit" onClick={registerDDR}>
-            Submit
-          </Button>
-        </Form>
-      </Segment>
+      <Grid>
+        <Grid.Column width={6}>
+          <Header as="h3">Select/Read a LexScript</Header>
+          <Form>
+            <Form.Field
+              control={Input}
+              placeholder="1"
+              label="LexScript ID"
+              value={lexScriptID}
+              onChange={e => setlexID(e.target.value)}
+            />
+            <Button type="submit" onClick={getLex}>
+              Submit
+            </Button>
+          </Form>
+          <Message style={{ height: "33.5vh" }}>
+            {lexScript ? lexScript : "Please select a LexScript ID first"}
+          </Message>
+        </Grid.Column>
+        <Grid.Column width={10}>
+          <Header as="h3">Register a DDR</Header>
+          <Form>
+            <Form.Field
+              control={Input}
+              placeholder="0x0000000000000000000000000000000000000000"
+              label="Provider Address"
+              value={provider}
+              onChange={e => setProvider(e.target.value)}
+            />
+            <Form.Field
+              control={Input}
+              placeholder="0x0000000000000000000000000000000000000000"
+              label="DDR Token Address"
+              value={DDRToken}
+              onChange={e => setDDRToken(e.target.value)}
+            />
+            <Form.Field
+              control={Input}
+              label="Deliverable Description"
+              placeholder="Description..."
+              value={deliverable}
+              onChange={e => setDeliverable(e.target.value)}
+            />
+            <Form.Field
+              control={Input}
+              placeholder="1"
+              label="Retainer Duration (days)"
+              value={retainerDuration}
+              onChange={e => setRetinerDuration(e.target.value)}
+            />
+            <Form.Field
+              control={Input}
+              placeholder="1"
+              label="Deliverable Rate"
+              value={deliverableRate}
+              onChange={e => setDeliverableRate(e.target.value)}
+            />
+            <Form.Field
+              control={Input}
+              placeholder="1 ETH"
+              label="Pay Cap (in ETH)"
+              value={payCap}
+              onChange={e => setPayCap(e.target.value)}
+            />
+            <Button type="submit" onClick={registerDDR}>
+              Submit
+            </Button>
+          </Form>
+        </Grid.Column>
+      </Grid>
     </>
   );
 }

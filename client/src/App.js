@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from "react";
 import {
-  Button,
   Divider,
   Header,
   Container,
-  Form,
-  Segment,
-  Input,
-  Message,
   Tab
 } from "semantic-ui-react";
 import TLDRContract from "./contracts/TLDR.json";
 import getWeb3 from "./utils/getWeb3";
 import "./App.css";
-import Submit from "./components/Submit"
-import Register from "./components/Register"
+import Submit from "./components/Submit";
+import Register from "./components/Register";
 
 export default function App() {
   const [web3, setWeb3] = useState(0);
@@ -50,7 +45,32 @@ export default function App() {
     fetchData();
   });
 
-
+  const panes = [
+    {
+      menuItem: "Submit Template",
+      render: () => (
+        <Tab.Pane
+          style={{
+            backgroundImage: "linear-gradient(to right, #fff8f2 , white)"
+          }}
+        >
+          <Submit web3={web3} accounts={accounts} contract={contract} />
+        </Tab.Pane>
+      )
+    },
+    {
+      menuItem: "Register DDR",
+      render: () => (
+        <Tab.Pane
+          style={{
+            backgroundImage: "linear-gradient(to right, #fff8f2 , white)"
+          }}
+        >
+          <Register web3={web3} accounts={accounts} contract={contract} />
+        </Tab.Pane>
+      )
+    }
+  ];
 
   if (!web3) {
     return <div>Loading Web3, accounts, and contract...</div>;
@@ -63,9 +83,7 @@ export default function App() {
           🖋️ TLDR
         </Header>
         <Header as="h2">The lexDAO Registry</Header>
-
-        <Submit web3={web3} accounts={accounts} contract={contract}/>
-        <Register web3={web3} accounts={accounts} contract={contract}/>
+        <Tab menu={{}} panes={panes} style={{paddingTop:"25px"}}/>
       </Container>
     </div>
   );

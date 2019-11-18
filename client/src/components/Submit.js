@@ -15,7 +15,7 @@ export default function Submit({ web3, accounts, contract }) {
   };
 
   return (
-    <Segment>
+    <>
       <Header as="h3">Submit a LexScript</Header>
       <Form>
         <Form.Field
@@ -44,6 +44,6 @@ export default function Submit({ web3, accounts, contract }) {
           Submit
         </Button>
       </Form>
-    </Segment>
+    </>
   );
 }
