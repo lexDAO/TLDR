@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Button, Header, Form, Table, Grid, Input } from "semantic-ui-react";
+import {
+  Button,
+  Label,
+  Header,
+  Form,
+  Table,
+  Grid,
+  Input
+} from "semantic-ui-react";
 
 export default function Submit({ web3, accounts, contract }) {
   const [clientDDRs, setClientDDRs] = useState();
@@ -8,7 +16,11 @@ export default function Submit({ web3, accounts, contract }) {
   const [clientSelected, setClientSelected] = useState(true);
   const [mappedArray, setMappedArray] = useState(clientDDRs);
 
+  const [activeDDR, setActiveDDR] = useState();
+  const [ddrSelected, setDDRSelected] = useState(false)
+
   const getDDR = async () => {
+    console.log("here");
     const numDDR = await contract.methods.RDDR().call();
     const DDRPromise = [...Array(parseInt(numDDR)).keys()].map(index =>
       contract.methods.rddr(index).call({ from: accounts[0], gas: 300000 })
@@ -22,8 +34,18 @@ export default function Submit({ web3, accounts, contract }) {
     setProviderDDRs(myProviderDDRs);
   };
 
-  const setActiveDDR = (ddr, i) => {
+  const setActive = (ddr, i) => {
+    setActiveDDR(ddr);
+    setDDRSelected(true);
     setActiveKey(i);
+  };
+
+  const makePayment = async () => {
+    console.log("calling make payment");
+    const res = await contract.methods
+      .payDDR(activeDDR.ddrNumber)
+      .send({ from: accounts[0], gas: 300000 });
+    console.log(res);
   };
 
   useEffect(() => {
@@ -36,8 +58,18 @@ export default function Submit({ web3, accounts, contract }) {
         <Grid.Column width={8}>
           <Header as="h3">Your DDRs</Header>
           <Button.Group>
-            <Button onClick={() => setClientSelected(true)} active={clientSelected}>Client</Button>
-            <Button onClick={() => setClientSelected(false)} active={!clientSelected}>Provider</Button>
+            <Button
+              onClick={() => setClientSelected(true)}
+              active={clientSelected}
+            >
+              Client
+            </Button>
+            <Button
+              onClick={() => setClientSelected(false)}
+              active={!clientSelected}
+            >
+              Provider
+            </Button>
           </Button.Group>
           <Table basic="very" celled>
             <Table.Header>
@@ -57,7 +89,7 @@ export default function Submit({ web3, accounts, contract }) {
                     <Table.Cell>
                       <span
                         className="fake-link"
-                        onClick={() => setActiveDDR(ddr, i)}
+                        onClick={() => setActive(ddr, i)}
                       >
                         {ddr.ddrNumber}
                       </span>
@@ -76,7 +108,7 @@ export default function Submit({ web3, accounts, contract }) {
                     <Table.Cell>
                       <span
                         className="fake-link"
-                        onClick={() => setActiveDDR(ddr, i)}
+                        onClick={() => setActive(ddr, i)}
                       >
                         {ddr.ddrNumber}
                       </span>
@@ -88,8 +120,23 @@ export default function Submit({ web3, accounts, contract }) {
           </Table>
         </Grid.Column>
         <Grid.Column width={6}>
-          <Header as="h3">Register a DDR</Header>
-          <Form></Form>
+          <Header as="h3">Manage DDR</Header>
+
+          {clientSelected && ddrSelected && (
+            <Form>
+              <Form.Field>
+                <label>Payment being made to</label>
+                <input value={activeDDR.provider} disabled={true} />
+              </Form.Field>
+              <Form.Field>
+                <label>Deliverable Payment (in ETH)</label>
+                <input value={activeDDR.deliverableRate} disabled={true} />
+              </Form.Field>
+              <Button type="submit" onClick={() => makePayment()}>
+                Submit
+              </Button>
+            </Form>
+          )}
         </Grid.Column>
       </Grid>
     </>
