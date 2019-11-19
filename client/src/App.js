@@ -5,6 +5,7 @@ import getWeb3 from "./utils/getWeb3";
 import "./App.css";
 import Submit from "./components/Submit";
 import Register from "./components/Register";
+import Pay from "./components/Pay";
 
 export default function App() {
   const [web3, setWeb3] = useState(0);
@@ -66,6 +67,19 @@ export default function App() {
         }}
         >
           <Register web3={web3} accounts={accounts} contract={contract} />
+        </Tab.Pane>
+      )
+    },
+    {
+      menuItem: "Manage DDR",
+      render: () => (
+        <Tab.Pane
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, rgba(150, 249, 222, 0.1), rgba(219, 237, 255, 0.3))"
+        }}
+        >
+          <Pay web3={web3} accounts={accounts} contract={contract} />
         </Tab.Pane>
       )
     }
