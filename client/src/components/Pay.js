@@ -6,7 +6,8 @@ import {
   Form,
   Table,
   Grid,
-  Input
+  Input,
+  Message
 } from "semantic-ui-react";
 
 export default function Submit({ web3, accounts, contract }) {
@@ -20,13 +21,13 @@ export default function Submit({ web3, accounts, contract }) {
   const [ddrSelected, setDDRSelected] = useState(false)
 
   const getDDR = async () => {
-    console.log("here");
     const numDDR = await contract.methods.RDDR().call();
     const DDRPromise = [...Array(parseInt(numDDR)).keys()].map(index =>
-      contract.methods.rddr(index).call({ from: accounts[0], gas: 300000 })
+      contract.methods.rddr(index+1).call({ from: accounts[0], gas: 300000 })
     );
 
     const DDRs = await Promise.all(DDRPromise);
+    console.log(DDRs)
     const myClientDDRs = DDRs.filter(ddr => accounts[0] === ddr.client);
     const myProviderDDRs = DDRs.filter(ddr => accounts[0] === ddr.provider);
 
@@ -47,6 +48,13 @@ export default function Submit({ web3, accounts, contract }) {
       .send({ from: accounts[0], gas: 300000 });
     console.log(res);
   };
+
+  const confirmDDR = async () => {
+    const res = await contract.methods
+    .confirmDDR(activeDDR.ddrNumber)
+    .send({ from: accounts[0], gas: 300000 });
+    console.log(res);
+  }
 
   useEffect(() => {
     getDDR();
@@ -122,7 +130,7 @@ export default function Submit({ web3, accounts, contract }) {
         <Grid.Column width={6}>
           <Header as="h3">Manage DDR</Header>
 
-          {clientSelected && ddrSelected && (
+          {clientSelected && ddrSelected && (activeDDR.confirmed ? (
             <Form>
               <Form.Field>
                 <label>Payment being made to</label>
@@ -136,7 +144,13 @@ export default function Submit({ web3, accounts, contract }) {
                 Submit
               </Button>
             </Form>
-          )}
+          ) : (
+            <Form>
+              <Message>You are about to transfer <b>{activeDDR.payCap}</b> into escrow at the smart contract address <b>{activeDDR.ddrToken}</b> for entering into a Digital Dollar Retainer with <b>{activeDDR.provider}</b>. Do you wish to confirm?</Message>
+              <Button type="submit" onClick={() => confirmDDR()}>Confirm</Button>
+            </Form>
+            
+          ))}
         </Grid.Column>
       </Grid>
     </>

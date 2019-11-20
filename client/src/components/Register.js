@@ -15,7 +15,7 @@ export default function Register({ web3, accounts, contract }) {
   const [lexScript, setLexScript] = useState();
 
   // Register DDR
-  const [provider, setProvider] = useState();
+  const [client, setClient] = useState();
   const [DDRToken, setDDRToken] = useState();
   const [deliverable, setDeliverable] = useState();
   const [retainerDuration, setRetinerDuration] = useState();
@@ -30,8 +30,8 @@ export default function Register({ web3, accounts, contract }) {
   const registerDDR = async () => {
     const res = await contract.methods
       .registerDDR(
+        client,
         accounts[0],
-        provider,
         DDRToken,
         deliverable,
         retainerDuration,
@@ -61,7 +61,10 @@ export default function Register({ web3, accounts, contract }) {
               Submit
             </Button>
           </Form>
-          <Message color={"teal"} style={{ minHeight: "33.5vh" }}>
+          <Message
+            color={"teal"}
+            style={{ minHeight: "33.5vh", overflowWrap: "break-word" }}
+          >
             {lexScript ? lexScript : "Please select a LexScript ID first"}
           </Message>
         </Grid.Column>
@@ -71,9 +74,9 @@ export default function Register({ web3, accounts, contract }) {
             <Form.Field
               control={Input}
               placeholder="0x0000000000000000000000000000000000000000"
-              label="Provider Address"
-              value={provider}
-              onChange={e => setProvider(e.target.value)}
+              label="Client Address"
+              value={client}
+              onChange={e => setClient(e.target.value)}
             />
             <Form.Field
               control={Input}
@@ -105,8 +108,8 @@ export default function Register({ web3, accounts, contract }) {
             />
             <Form.Field
               control={Input}
-              placeholder="1 ETH"
-              label="Pay Cap (in ETH)"
+              placeholder="1"
+              label="Pay Cap"
               value={payCap}
               onChange={e => setPayCap(e.target.value)}
             />

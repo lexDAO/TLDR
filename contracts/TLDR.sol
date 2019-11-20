@@ -844,7 +844,7 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: internet-native market to wrap & e
     	require(lexID > (0)); // program safety check 
     	require(lexID <= LSW); // program safety check 
         require(deliverableRate <= payCap); // program safety check / economics
-	require(msg.sender == client); // program safety check / authorization / client signs TLDR transaction registering ddr offer / designates provider for confirmation
+	require(msg.sender == provider); // program safety check / authorization / client signs TLDR transaction registering ddr offer / designates provider for confirmation
         
 	uint256 ddrNumber = RDDR.add(1); // reflects new rddr value for inspection and escrow management
         uint256 retainerTermination = now.add(retainerDuration); // rddr termination date in UnixTime, "now" block.timestamp + retainerDuration
@@ -875,7 +875,7 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: internet-native market to wrap & e
 
         require(ddr.confirmed == false); // program safety check / status
         require(now <= ddr.retainerTermination); // program safety check / time
-        require(msg.sender == ddr.provider); // program safety check / authorization
+        require(msg.sender == ddr.client); // program safety check / authorization
         
         ddr.confirmed = true; // reflect rddr provider countersignature
         ERC20 ddrToken = ERC20(ddr.ddrToken);
