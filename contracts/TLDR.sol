@@ -850,7 +850,7 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: internet-native market to wrap & e
         uint256 retainerTermination = now.add(retainerDuration); // rddr termination date in UnixTime, "now" block.timestamp + retainerDuration
 
 	RDDR = RDDR.add(1); // counts new entry to RDDR
-    
+                
             rddr[ddrNumber] = DDR( // populate rddr data 
                 client,
                 provider,
@@ -868,18 +868,18 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: internet-native market to wrap & e
         	 
         emit Registered(ddrNumber, lexID, msg.sender); 
     }
-    
+
     // rddr provider can confirm rddr offer and countersign ddrNumber / trigger escrow deposit from rddr client in approved payCap amount
     function confirmDDR(uint256 ddrNumber) public {
         DDR storage ddr = rddr[ddrNumber]; // retrieve rddr data
-        
+
         require(ddr.confirmed == false); // program safety check / status
         require(now <= ddr.retainerTermination); // program safety check / time
         require(msg.sender == ddr.provider); // program safety check / authorization
         
         ddr.confirmed = true; // reflect rddr provider countersignature
-        
-        ddr.ddrToken.transferFrom(ddr.client, address(this), ddr.payCap); // escrows payCap amount in approved ddrToken into TLDR for rddr payments and/or lexScribe resolution
+        ERC20 ddrToken = ERC20(ddr.ddrToken);
+        ddrToken.transfer(address(this), ddr.payCap); // escrows payCap amount in approved ddrToken into TLDR for rddr payments and/or lexScribe resolution
     
         emit Confirmed(ddrNumber, ddr.lexID, msg.sender);
     }
