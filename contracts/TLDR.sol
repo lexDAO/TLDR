@@ -628,7 +628,7 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: internet-native market to wrap & e
     struct DDR { // Digital Dollar Retainer created on lexScript terms maintained by lexScribes / data for registration 
         address client; // rddr client (0x) address
         address provider; // provider (0x) address that receives ERC-20 payments in exchange for goods or services
-        ERC20 ddrToken; // ERC-20 digital token (0x) address used to transfer digital value on ethereum under rddr / e.g., DAI 'digital dollar' - 0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359
+        address ddrToken; // ERC-20 digital token (0x) address used to transfer digital value on ethereum under rddr / e.g., DAI 'digital dollar' - 0x89d24A6b4CcB1B6fAA2625fE562bDD9a23260359
         string deliverable; // goods or services (deliverable) retained for benefit of ethereum payments
         uint256 lexID; // lexID number reference to include lexScriptWrapper for legal security / default '1' for generalized rddr lexScript template
         uint256 ddrNumber; // rddr number generated on DDR registration / identifies rddr for payDDR function calls
@@ -835,7 +835,7 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: internet-native market to wrap & e
     function registerDDR( // rddr 
     	address client,
     	address provider,
-    	ERC20 ddrToken,
+    	address ddrToken,
     	string memory deliverable,
         uint256 retainerDuration,
     	uint256 deliverableRate,
@@ -878,8 +878,8 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: internet-native market to wrap & e
         require(msg.sender == ddr.client); // program safety check / authorization
         
         ddr.confirmed = true; // reflect rddr provider countersignature
-        ERC20 ddrToken = ERC20(ddr.ddrToken);
-        ddrToken.transfer(address(this), ddr.payCap); // escrows payCap amount in approved ddrToken into TLDR for rddr payments and/or lexScribe resolution
+        ERC20 ddrTokenERC20 = ERC20(ddr.ddrToken);
+        ddrTokenERC20.transferFrom(msg.sender,address(this), ddr.payCap); // escrows payCap amount in approved ddrToken into TLDR for rddr payments and/or lexScribe resolution
     
         emit Confirmed(ddrNumber, ddr.lexID, msg.sender);
     }
@@ -925,9 +925,10 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: internet-native market to wrap & e
         require(isReputable(msg.sender)); // program governance check / resolving lexScribe must be reputable
 	require(balanceOf(msg.sender) >= 5000000000000000000); // program governance check / resolving lexScribe must have at least "5" LEX balance
 	
-        ddr.ddrToken.transfer(ddr.client, clientAward); // executes ERC-20 award transfer to rddr client
-        ddr.ddrToken.transfer(ddr.provider, providerAward); // executes ERC-20 award transfer to rddr provider
-    	ddr.ddrToken.transfer(msg.sender, resolutionFee); // executes ERC-20 fee transfer to resolving lexScribe
+        ERC20 ddrTokenERC20 = ERC20(ddr.ddrToken);
+        ddrTokenERC20.transfer(ddr.client, clientAward); // executes ERC-20 award transfer to rddr client
+        ddrTokenERC20.transfer(ddr.provider, providerAward); // executes ERC-20 award transfer to rddr provider
+    	ddrTokenERC20.transfer(msg.sender, resolutionFee); // executes ERC-20 fee transfer to resolving lexScribe
     	
     	_mint(msg.sender, 1000000000000000000); // mints resolving lexScribe "1" LEX for contribution to TLDR
 	
@@ -949,8 +950,9 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: internet-native market to wrap & e
 	
     	uint256 lexFee = ddr.deliverableRate.div(lS.lexRate); // derives lexFee from rddr deliverableRate
 	
-    	ddr.ddrToken.transfer(ddr.provider, ddr.deliverableRate.sub(lexFee)); // executes ERC-20 transfer to rddr provider in deliverableRate amount
-    	ddr.ddrToken.transfer(lS.lexAddress, lexFee); // executes ERC-20 transfer of lexFee to (0x) lexAddress identified in lexID
+        ERC20 ddrTokenERC20 = ERC20(ddr.ddrToken);
+    	ddrTokenERC20.transfer(ddr.provider, ddr.deliverableRate.sub(lexFee)); // executes ERC-20 transfer to rddr provider in deliverableRate amount
+    	ddrTokenERC20.transfer(lS.lexAddress, lexFee); // executes ERC-20 transfer of lexFee to (0x) lexAddress identified in lexID
     	ddr.paid = ddr.paid.add(ddr.deliverableRate); // tracks total ERC-20 wei amount paid under rddr / used to calculate rddr remainder
         
 	emit Paid(ddr.ddrNumber, ddr.lexID); 
@@ -966,10 +968,11 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: internet-native market to wrap & e
     	require(msg.sender == ddr.client); // program safety check / authorization
     	
     	uint256 remainder = ddr.payCap.sub(ddr.paid); // derive rddr remainder
-    	
+    	ERC20 ddrTokenERC20 = ERC20(ddr.ddrToken);
+
     	require(remainder > 0); // program safety check / economics
 	
-    	ddr.ddrToken.transfer(ddr.client, remainder); // executes ERC-20 transfer to rddr provider in escrow remainder amount
+    	ddrTokenERC20.transfer(ddr.client, remainder); // executes ERC-20 transfer to rddr provider in escrow remainder amount
     	
     	ddr.paid = ddr.paid.add(remainder); // tallies remainder to paid wei amount to reflect rddr closure
     }

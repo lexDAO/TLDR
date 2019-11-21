@@ -9,6 +9,7 @@ import {
   Input,
   Message
 } from "semantic-ui-react";
+import ERC20 from "../contracts/ERC20.json";
 
 export default function Submit({ web3, accounts, contract }) {
   const [clientDDRs, setClientDDRs] = useState();
@@ -18,21 +19,31 @@ export default function Submit({ web3, accounts, contract }) {
   const [mappedArray, setMappedArray] = useState(clientDDRs);
 
   const [activeDDR, setActiveDDR] = useState();
-  const [ddrSelected, setDDRSelected] = useState(false)
+  const [ddrSelected, setDDRSelected] = useState(false);
+  const [ddrTokenContract, setDDRTokenContract] = useState();
 
   const getDDR = async () => {
     const numDDR = await contract.methods.RDDR().call();
     const DDRPromise = [...Array(parseInt(numDDR)).keys()].map(index =>
-      contract.methods.rddr(index+1).call({ from: accounts[0], gas: 300000 })
+      contract.methods.rddr(index + 1).call({ from: accounts[0], gas: 300000 })
     );
 
     const DDRs = await Promise.all(DDRPromise);
-    console.log(DDRs)
+    console.log(DDRs);
     const myClientDDRs = DDRs.filter(ddr => accounts[0] === ddr.client);
     const myProviderDDRs = DDRs.filter(ddr => accounts[0] === ddr.provider);
 
     setClientDDRs(myClientDDRs);
     setProviderDDRs(myProviderDDRs);
+  };
+
+  const getTokenContract = async () => {
+    const erc20Instance = await new web3.eth.Contract(
+      ERC20.abi,
+      activeDDR.ddrToken
+    );
+
+    return erc20Instance;
   };
 
   const setActive = (ddr, i) => {
@@ -50,11 +61,16 @@ export default function Submit({ web3, accounts, contract }) {
   };
 
   const confirmDDR = async () => {
+    const tokenInstance = await getTokenContract();
+    await tokenInstance.methods
+      .approve(contract._address, activeDDR.payCap)
+      .send({ from: accounts[0], gas: 300000 });
+
     const res = await contract.methods
-    .confirmDDR(activeDDR.ddrNumber)
-    .send({ from: accounts[0], gas: 300000 });
+      .confirmDDR(activeDDR.ddrNumber)
+      .send({ from: accounts[0], gas: 300000 });
     console.log(res);
-  }
+  };
 
   useEffect(() => {
     getDDR();
@@ -130,27 +146,36 @@ export default function Submit({ web3, accounts, contract }) {
         <Grid.Column width={6}>
           <Header as="h3">Manage DDR</Header>
 
-          {clientSelected && ddrSelected && (activeDDR.confirmed ? (
-            <Form>
-              <Form.Field>
-                <label>Payment being made to</label>
-                <input value={activeDDR.provider} disabled={true} />
-              </Form.Field>
-              <Form.Field>
-                <label>Deliverable Payment (in ETH)</label>
-                <input value={activeDDR.deliverableRate} disabled={true} />
-              </Form.Field>
-              <Button type="submit" onClick={() => makePayment()}>
-                Submit
-              </Button>
-            </Form>
-          ) : (
-            <Form>
-              <Message>You are about to transfer <b>{activeDDR.payCap}</b> into escrow at the smart contract address <b>{activeDDR.ddrToken}</b> for entering into a Digital Dollar Retainer with <b>{activeDDR.provider}</b>. Do you wish to confirm?</Message>
-              <Button type="submit" onClick={() => confirmDDR()}>Confirm</Button>
-            </Form>
-            
-          ))}
+          {clientSelected &&
+            ddrSelected &&
+            (activeDDR.confirmed ? (
+              <Form>
+                <Form.Field>
+                  <label>Payment being made to</label>
+                  <input value={activeDDR.provider} disabled={true} />
+                </Form.Field>
+                <Form.Field>
+                  <label>Deliverable Payment (in ETH)</label>
+                  <input value={activeDDR.deliverableRate} disabled={true} />
+                </Form.Field>
+                <Button type="submit" onClick={() => makePayment()}>
+                  Submit
+                </Button>
+              </Form>
+            ) : (
+              <Form>
+                <Message>
+                  You are about to transfer <b>{activeDDR.payCap}</b> into
+                  escrow at the smart contract address{" "}
+                  <b>{activeDDR.ddrToken}</b> for entering into a Digital Dollar
+                  Retainer with <b>{activeDDR.provider}</b>. Do you wish to
+                  confirm?
+                </Message>
+                <Button type="submit" onClick={() => confirmDDR()}>
+                  Confirm
+                </Button>
+              </Form>
+            ))}
         </Grid.Column>
       </Grid>
     </>
