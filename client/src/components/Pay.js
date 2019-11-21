@@ -155,7 +155,7 @@ export default function Submit({ web3, accounts, contract }) {
                   <input value={activeDDR.provider} disabled={true} />
                 </Form.Field>
                 <Form.Field>
-                  <label>Deliverable Payment (in ETH)</label>
+                  <label>Deliverable Payment (in ERC20 tokens)</label>
                   <input value={activeDDR.deliverableRate} disabled={true} />
                 </Form.Field>
                 <Button type="submit" onClick={() => makePayment()}>
@@ -176,6 +176,15 @@ export default function Submit({ web3, accounts, contract }) {
                 </Button>
               </Form>
             ))}
+
+          {!clientSelected && ddrSelected && (
+            <Form>
+              <Message>
+                <b>{activeDDR.client}</b> has so far paid{" "}
+                <b>{activeDDR.paid}</b> of the total <b>{activeDDR.payCap}</b> cap. There are <b>{Math.abs(activeDDR.retainerTermination - Date.now()/1000)/86400}</b> days left in the retainer
+              </Message>
+            </Form>
+          )}
         </Grid.Column>
       </Grid>
     </>

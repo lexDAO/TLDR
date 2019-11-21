@@ -34,7 +34,7 @@ export default function Register({ web3, accounts, contract }) {
         accounts[0],
         DDRToken,
         deliverable,
-        retainerDuration,
+        retainerDuration*86400,
         deliverableRate,
         payCap,
         lexScriptID
