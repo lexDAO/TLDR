@@ -628,7 +628,7 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: Curated escrow and covenant script
     struct DR { // Digital Retainer created on lexScript terms maintained by lexScribes / data registered for escrow script 
         address client; // rdr client (0x) address
         address provider; // provider (0x) address that receives ERC-20 payments in exchange for goods or services (deliverable)
-        address drToken; // ERC-20 digital token (0x) address used to transfer value on Ethereum under rdr / e.g., DAI 'digital dollar' - 0x6b175474e89094c44da98b954eedeac495271d0f
+        address drToken; // ERC-20 digital token (0x) address used to transfer value on Ethereum under rdr 
         string deliverable; // description of deliverable retained for benefit of Ethereum payments
         uint256 lexID; // lexID number reference to include lexScriptWrapper for legal security / default '1' for generalized rdr lexScript template
         uint256 drNumber; // rdr number generated on DR registration / identifies rdr for payDR function calls
@@ -875,7 +875,7 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: Curated escrow and covenant script
         
         dr.confirmed = true; // reflect rdr client countersignature
         ERC20 drTokenERC20 = ERC20(dr.drToken);
-        drTokenERC20.transferFrom(msg.sender, address(this), dr.payCap); // escrows payCap amount in approved drToken into TLDR for rdr payments and/or lexScribe resolution
+        drTokenERC20.transferFrom(msg.sender, address(this), dr.payCap); // escrows payCap amount in approved drToken into TLDR 
     
         emit Confirmed(drNumber, dr.lexID, msg.sender);
     }
