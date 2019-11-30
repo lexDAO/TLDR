@@ -577,7 +577,7 @@ contract ERC20 is Context, IERC20 {
 /***************
 TLDR CONTRACT
 ***************/
-contract TLDR is ScribeRole, ERC20 { // TLDR: Curated escrow and covenant scriptbase with incentivized arbitration
+contract TLDR is ScribeRole, ERC20 { // TLDR: Curated covenant & escrow scriptbase with incentivized arbitration
     using SafeMath for uint256;
     
     // lexDAO reference for lexScribe reputation governance fees (Ξ)
@@ -660,7 +660,7 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: Curated escrow and covenant script
     event Enscribed(uint256 indexed lexID, uint256 indexed lexVersion, address indexed lexScribe); // triggered on successful LSW creation / edits to LSW
     event Signed(uint256 indexed lexID, uint256 indexed dcNumber, address indexed signatory); // triggered on successful DC creation / edits to DC 
     event Registered(uint256 indexed drNumber, uint256 indexed lexID, address indexed provider); // triggered on successful rdr 
-    event Confirmed(uint256 indexed drNumber, uint256 indexed lexID, address indexed client); // triggered on succesfful rdr confirmation
+    event Confirmed(uint256 indexed drNumber, uint256 indexed lexID, address indexed client); // triggered on successful rdr confirmation
     event Paid(uint256 indexed drNumber, uint256 indexed lexID); // triggered on successful rdr payments
     event Disputed(uint256 indexed drNumber); // triggered on rdr dispute
     event Resolved(uint256 indexed drNumber); // triggered on successful rdr dispute resolution
