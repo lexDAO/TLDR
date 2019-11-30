@@ -599,12 +599,12 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: Curated escrow and covenant script
     // mapping for lexScribe reputation governance program
     mapping(address => uint256) public reputation; // mapping lexScribe reputation points 
     mapping(address => uint256) public lastActionTimestamp; // mapping Unix timestamp of lexScribe governance actions (cooldown)
-    mapping(address => uint256) public lastSuperActionTimestamp; // mapping Unix timestamp of special lexScribe governance actions that require longer cooldown (icedown)
+    mapping(address => uint256) public lastSuperActionTimestamp; // mapping Unix timestamp of material lexScribe governance actions requiring longer cooldown (icedown)
     
     // mapping for stored lexScript wrappers and registered digital retainers (DR / rdr)
     mapping (uint256 => lexScriptWrapper) public lexScript; // mapping registered lexScript 'wet code' templates
     mapping (uint256 => DC) public rdc; // mapping rdc call numbers for inspection and signature revocation
-    mapping (uint256 => DR) public rdr; // mapping rdr call numbers for inspection and digital payments
+    mapping (uint256 => DR) public rdr; // mapping rdr call numbers for inspection and scripted payments
 	
     struct lexScriptWrapper { // LSW: rdr lexScript templates maintained by lexScribes
         address lexScribe; // lexScribe (0x) address that enscribed lexScript template into TLDR / can make subsequent edits (lexVersion)
@@ -612,7 +612,7 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: Curated escrow and covenant script
         string templateTerms; // lexScript template terms to wrap rdr with legal security
         uint256 lexID; // number to reference in rdr to import lexScript terms
         uint256 lexVersion; // version number to mark lexScribe edits
-        uint256 lexRate; // fixed, divisible rate for lexFee in ddrToken type per rdr payment made thereunder / e.g., 100 = 1% lexFee on rdr payDR payment transaction
+        uint256 lexRate; // fixed divisible rate for lexFee in drToken per rdr payment made thereunder / e.g., 100 = 1% lexFee on rdr payDR transaction
     }
         
     struct DC { // Digital Covenant lexScript templates maintained by lexScribes
@@ -620,20 +620,20 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: Curated escrow and covenant script
         string templateTerms; // DC templateTerms imported from referenced lexScriptWrapper
         string signatureDetails; // DC may include signatory name or other supplementary info
         uint256 lexID; // lexID number reference to include lexScriptWrapper for legal security 
-        uint256 dcNumber; // DC number generated on signed covenant registration / identifies DC for signatory revocation function call
+        uint256 dcNumber; // DC number generated on signed covenant registration / identifies DC for signatory revocation 
         uint256 timeStamp; // block.timestamp ("now") of DC registration 
         bool revoked; // tracks signatory revocation status on DC
     }
     	
-    struct DR { // Digital Dollar Retainer created on lexScript terms maintained by lexScribes / data for registration 
+    struct DR { // Digital Retainer created on lexScript terms maintained by lexScribes / data registered for escrow script 
         address client; // rdr client (0x) address
-        address provider; // provider (0x) address that receives ERC-20 payments in exchange for goods or services
-        address drToken; // ERC-20 digital token (0x) address used to transfer digital value on ethereum under rdr / e.g., DAI 'digital dollar' - 0x6b175474e89094c44da98b954eedeac495271d0f
-        string deliverable; // goods or services (deliverable) retained for benefit of ethereum payments
+        address provider; // provider (0x) address that receives ERC-20 payments in exchange for goods or services (deliverable)
+        address drToken; // ERC-20 digital token (0x) address used to transfer value on Ethereum under rdr / e.g., DAI 'digital dollar' - 0x6b175474e89094c44da98b954eedeac495271d0f
+        string deliverable; // description of deliverable retained for benefit of Ethereum payments
         uint256 lexID; // lexID number reference to include lexScriptWrapper for legal security / default '1' for generalized rdr lexScript template
-        uint256 drNumber; // rdr number generated on DR registration / identifies rddr for payDR function calls
+        uint256 drNumber; // rdr number generated on DR registration / identifies rdr for payDR function calls
         uint256 timeStamp; // block.timestamp ("now") of registration used to calculate retainerTermination UnixTime
-        uint256 retainerTermination; // termination date of rdr in UnixTime / locks payments to provider / after termination, allows withdrawal of remaining escrow digital value by client on payDR function
+        uint256 retainerTermination; // termination date of rdr in UnixTime / locks payments to provider / after, remainder can be withrawn by client
         uint256 deliverableRate; // rate for rdr deliverables in wei amount / 1 = 1000000000000000000
         uint256 paid; // tracking amount of designated ERC-20 digital value paid under rdr in wei amount for payCap logic
         uint256 payCap; // value cap limit on rdr payments in wei amount 
@@ -641,7 +641,7 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: Curated escrow and covenant script
         bool disputed; // tracks dispute status from client or provider / if called, locks remainder of escrow rdr payments for reputable lexScribe resolution
     }
     	
-    constructor(string memory tldrTerms, uint256 tldrLexRate, address tldrLexAddress, address payable _lexDAO) public { // deploys TLDR contract with designated lexRate / lexAddress (0x) & stores base lexScript template "1" (lexID)
+    constructor(string memory tldrTerms, uint256 tldrLexRate, address tldrLexAddress, address payable _lexDAO) public { // deploys TLDR contract & stores base lexScript template "1" (lexID)
 	reputation[msg.sender] = 1; // sets TLDR summoner lexScribe reputation to '1' initial value
 	lexDAO = _lexDAO; // sets initial lexDAO (0x) address 
 	
@@ -659,8 +659,8 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: Curated escrow and covenant script
     // TLDR Contract Events
     event Enscribed(uint256 indexed lexID, uint256 indexed lexVersion, address indexed lexScribe); // triggered on successful LSW creation / edits to LSW
     event Signed(uint256 indexed lexID, uint256 indexed dcNumber, address indexed signatory); // triggered on successful DC creation / edits to DC 
-    event Registered(uint256 indexed drNumber, uint256 indexed lexID, address indexed client); // triggered on successful rdr 
-    event Confirmed(uint256 indexed drNumber, uint256 indexed lexID, address indexed provider); // triggered on succesfful rdr confirmation
+    event Registered(uint256 indexed drNumber, uint256 indexed lexID, address indexed provider); // triggered on successful rdr 
+    event Confirmed(uint256 indexed drNumber, uint256 indexed lexID, address indexed client); // triggered on succesfful rdr confirmation
     event Paid(uint256 indexed drNumber, uint256 indexed lexID); // triggered on successful rdr payments
     event Disputed(uint256 indexed drNumber); // triggered on rdr dispute
     event Resolved(uint256 indexed drNumber); // triggered on successful rdr dispute resolution
@@ -748,12 +748,11 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: Curated escrow and covenant script
     /***************
     TLDR LEXSCRIBE FUNCTIONS
     ***************/
-    // reputable lexScribes can register lexScript legal wrappers on TLDR and program ERC-20 lexFees associated with lexID / receive LEX mint, "1"
+    // reputable lexScribes can register lexScript legal wrappers on TLDR and program ERC-20 lexFees associated with lexID / LEX mint, "1"
     function writeLexScript(string memory templateTerms, uint256 lexRate, address lexAddress) public {
         require(isReputable(msg.sender)); // program governance check / lexScribe must be reputable 
 	
 	uint256 lexID = LSW.add(1); // reflects new lexScript value for tracking lexScript wrappers
-	uint256 lexVersion = 0; // initalized lexVersion, "0"
 	LSW = LSW.add(1); // counts new entry to LSW 
 	    
 	    lexScript[lexID] = lexScriptWrapper( // populate lexScript data for rdr / rdc usage
@@ -761,15 +760,15 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: Curated escrow and covenant script
                 lexAddress,
                 templateTerms,
                 lexID,
-                lexVersion,
+                0,
                 lexRate);
                 
         _mint(msg.sender, 1000000000000000000); // mints lexScribe "1" LEX for contribution to TLDR
 	
-        emit Enscribed(lexID, lexVersion, msg.sender); 
+        emit Enscribed(lexID, 0, msg.sender); 
     }
 	    
-    // lexScribes can update TLDR lexScript wrappers with new templateTerms and (0x) newLexAddress / versions up LSW
+    // lexScribes can update TLDR lexScript wrappers with new templateTerms and (0x) newLexAddress / version up LSW
     function editLexScript(uint256 lexID, string memory templateTerms, address lexAddress) public {
 	lexScriptWrapper storage lS = lexScript[lexID]; // retrieve LSW data
 	
@@ -824,13 +823,13 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: Curated escrow and covenant script
                 dc.signatureDetails,
                 dc.lexID,
                 dc.dcNumber,
-                now, // updates to revocation timestamp
-                true);
+                now, // updates to revocation block.timestamp
+                true); // reflects revocation status
                 	
         emit Signed(dc.lexID, dcNumber, msg.sender);
     }
     
-    // goods and/or service providers can register DR with TLDR lexScripts (lexID) 
+    // goods and/or service providers can register DR with TLDR lexScript (lexID) 
     function registerDR( // rdr 
     	address client,
     	address drToken,
@@ -912,11 +911,11 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: Curated escrow and covenant script
     function resolveDR(uint256 drNumber, uint256 clientAward, uint256 providerAward) public {
         DR storage dr = rdr[drNumber]; // retrieve rdr data
 	
-	uint256 dRemainder = dr.payCap.sub(dr.paid); // alias remainder rdr wei amount for rdr resolution reference
-	uint256 resolutionFee = dRemainder.div(20); // calculates 5% lexScribe dispute resolution fee
+	uint256 remainder = dr.payCap.sub(dr.paid); // alias remainder rdr wei amount for rdr resolution reference
+	uint256 resolutionFee = remainder.div(20); // calculates 5% lexScribe dispute resolution fee
 	
 	require(dr.disputed == true); // program safety check / status
-	require(clientAward.add(providerAward) == dRemainder.sub(resolutionFee)); // program safety check / economics
+	require(clientAward.add(providerAward) == remainder.sub(resolutionFee)); // program safety check / economics
         require(msg.sender != dr.client); // program safety check / authorization / client cannot resolve own dispute as lexScribe
         require(msg.sender != dr.provider); // program safety check / authorization / provider cannot resolve own dispute as lexScribe
         require(isReputable(msg.sender)); // program governance check / resolving lexScribe must be reputable
@@ -929,7 +928,7 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: Curated escrow and covenant script
     	
     	_mint(msg.sender, 1000000000000000000); // mints resolving lexScribe "1" LEX for contribution to TLDR
 	
-	dr.paid = dr.paid.add(dRemainder); // tallies remainder to paid wei amount to reflect rdr closure
+	dr.paid = dr.paid.add(remainder); // tallies remainder to paid wei amount to reflect rdr closure
 	    
 	emit Resolved(drNumber);
     }
@@ -952,11 +951,11 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: Curated escrow and covenant script
     	drTokenERC20.transfer(lS.lexAddress, lexFee); // executes ERC-20 transfer of lexFee to (0x) lexAddress identified in lexID
     	dr.paid = dr.paid.add(dr.deliverableRate); // tracks total ERC-20 wei amount paid under rdr / used to calculate rdr remainder
         
-	emit Paid(dr.drNumber, dr.lexID); 
+	emit Paid(drNumber, dr.lexID); 
     }
     
     // client can call to withdraw rdr remainder on TLDR after termination
-    function withdrawRemainder(uint256 drNumber) public { // releases escrowed drToken deliverableRate amount to provider (0x) address 
+    function withdrawRemainder(uint256 drNumber) public {  
     	DR storage dr = rdr[drNumber]; // retrieve rdr data
 	
         require(dr.confirmed == true); // program safety check / status
@@ -969,7 +968,7 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: Curated escrow and covenant script
 
     	require(remainder > 0); // program safety check / economics
 	
-    	drTokenERC20.transfer(dr.client, remainder); // executes ERC-20 transfer to rdr provider in escrow remainder amount
+    	drTokenERC20.transfer(dr.client, remainder); // executes ERC-20 transfer to rdr client in escrow remainder amount
     	
     	dr.paid = dr.paid.add(remainder); // tallies remainder to paid wei amount to reflect rdr closure
     }
