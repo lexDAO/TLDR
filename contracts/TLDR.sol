@@ -641,7 +641,7 @@ contract TLDR is ScribeRole, ERC20 { // TLDR: Curated escrow and covenant script
         bool disputed; // tracks dispute status from client or provider / if called, locks remainder of escrow rdr payments for reputable lexScribe resolution
     }
     	
-    constructor(string memory tldrTerms, uint256 tldrLexRate, address tldrLexAddress, address payable _lexDAO) public { // deploys TLDR contract & stores base lexScript template "1" (lexID)
+    constructor(string memory tldrTerms, uint256 tldrLexRate, address tldrLexAddress, address payable _lexDAO) public { // deploys TLDR contract & stores base lexScript "1"
 	reputation[msg.sender] = 1; // sets TLDR summoner lexScribe reputation to '1' initial value
 	lexDAO = _lexDAO; // sets initial lexDAO (0x) address 
 	
