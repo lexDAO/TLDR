@@ -11,21 +11,29 @@ import {
 
 export default function Register({ web3, accounts, contract }) {
   // Read LexScript Template
-  const [lexScriptID, setlexID] = useState();
+  const [lexScriptID, setlexID] = useState(1);
   const [lexScript, setLexScript] = useState();
 
   // Register DDR
   const [client, setClient] = useState();
-  const [DDRToken, setDDRToken] = useState();
+  const [DDRToken, setDDRToken] = useState(
+    "0x6B175474E89094C44Da98b954EedeAC495271d0F"
+  );
   const [deliverable, setDeliverable] = useState();
   const [retainerDuration, setRetinerDuration] = useState();
   const [deliverableRate, setDeliverableRate] = useState();
   const [payCap, setPayCap] = useState();
 
   const getLex = async () => {
-    const lexScript = await contract.methods.lexScript(lexScriptID).call();
-    setLexScript(lexScript.templateTerms);
+    if (contract) {
+      const lexScript = await contract.methods.lexScript(lexScriptID).call();
+      setLexScript(lexScript.templateTerms);
+    }
   };
+
+  useEffect(() => {
+    getLex();
+  });
 
   const registerDDR = async () => {
     const res = await contract.methods
@@ -34,7 +42,7 @@ export default function Register({ web3, accounts, contract }) {
         accounts[0],
         DDRToken,
         deliverable,
-        retainerDuration*86400,
+        retainerDuration * 86400,
         deliverableRate,
         payCap,
         lexScriptID
@@ -69,7 +77,7 @@ export default function Register({ web3, accounts, contract }) {
           </Message>
         </Grid.Column>
         <Grid.Column width={10}>
-          <Header as="h3">Register a DR</Header>
+          <Header as="h3">Register a Digital Retainer</Header>
           <Form>
             <Form.Field
               control={Input}
@@ -77,13 +85,6 @@ export default function Register({ web3, accounts, contract }) {
               label="Client Address"
               value={client}
               onChange={e => setClient(e.target.value)}
-            />
-            <Form.Field
-              control={Input}
-              placeholder="0x0000000000000000000000000000000000000000"
-              label="DDR Token Address"
-              value={DDRToken}
-              onChange={e => setDDRToken(e.target.value)}
             />
             <Form.Field
               control={Input}
@@ -111,7 +112,7 @@ export default function Register({ web3, accounts, contract }) {
               placeholder="1"
               label="Pay Cap"
               value={payCap}
-              onChange={e => setPayCap(e.target.value)}
+              onChange={e => setPayCap(web3.utils.toWei(e.target.value))}
             />
             <Button type="submit" onClick={registerDDR}>
               Submit

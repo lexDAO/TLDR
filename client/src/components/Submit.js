@@ -28,7 +28,7 @@ export default function Submit({ web3, accounts, contract }) {
         <Form.Field
           control={Input}
           placeholder="0"
-          label="Lex Rate (1 = 0.01%)"
+          label="Lex Rate (100 = 1%)"
           value={rate}
           onChange={e => setRate(e.target.value)}
         />

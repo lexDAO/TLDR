@@ -80,7 +80,7 @@ export default function Submit({ web3, accounts, contract }) {
     <>
       <Grid>
         <Grid.Column width={8}>
-          <Header as="h3">Your DDRs</Header>
+          <Header as="h3">Your Digital Retainers</Header>
           <Button.Group>
             <Button
               onClick={() => setClientSelected(true)}
@@ -144,7 +144,7 @@ export default function Submit({ web3, accounts, contract }) {
           </Table>
         </Grid.Column>
         <Grid.Column width={6}>
-          <Header as="h3">Manage DDR</Header>
+          <Header as="h3">Manage Digital Retainer</Header>
 
           {clientSelected &&
             ddrSelected &&
@@ -156,7 +156,7 @@ export default function Submit({ web3, accounts, contract }) {
                 </Form.Field>
                 <Form.Field>
                   <label>Deliverable Payment (in ERC20 tokens)</label>
-                  <input value={activeDDR.deliverableRate} disabled={true} />
+                  <input value={web3.utils.fromWei(activeDDR.deliverableRate)} disabled={true} />
                 </Form.Field>
                 <Button type="submit" onClick={() => makePayment()}>
                   Submit
@@ -180,8 +180,8 @@ export default function Submit({ web3, accounts, contract }) {
           {!clientSelected && ddrSelected && (
             <Form>
               <Message>
-                <b>{activeDDR.client}</b> has so far paid{" "}
-                <b>{activeDDR.paid}</b> of the total <b>{activeDDR.payCap}</b> cap. There are <b>{Math.abs(activeDDR.retainerTermination - Date.now()/1000)/86400}</b> days left in the retainer
+                <b>{web3.utils.fromWei(activeDDR.client)}</b> has so far paid{" "}
+                <b>{web3.utils.fromWei(activeDDR.paid)}</b> of the total <b>{activeDDR.payCap}</b> cap. There are <b>{Math.abs((activeDDR.retainerTermination - Date.now()/1000)/86400).toFixed(2)}</b> days left in the retainer
               </Message>
             </Form>
           )}
