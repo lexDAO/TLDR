@@ -58,7 +58,7 @@ export default function App() {
       )
     },
     {
-      menuItem: "Register DDR",
+      menuItem: "Register DR",
       render: () => (
         <Tab.Pane
         style={{
@@ -71,7 +71,7 @@ export default function App() {
       )
     },
     {
-      menuItem: "Manage DDR",
+      menuItem: "Manage DR",
       render: () => (
         <Tab.Pane
         style={{
@@ -100,6 +100,7 @@ export default function App() {
           menu={{ tabular: true }}
           panes={panes}
           style={{ paddingTop: "25px" }}
+          defaultActiveIndex={1}
         />
       </Container>
     </div>

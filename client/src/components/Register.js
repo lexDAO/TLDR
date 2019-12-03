@@ -69,7 +69,7 @@ export default function Register({ web3, accounts, contract }) {
           </Message>
         </Grid.Column>
         <Grid.Column width={10}>
-          <Header as="h3">Register a DDR</Header>
+          <Header as="h3">Register a DR</Header>
           <Form>
             <Form.Field
               control={Input}
