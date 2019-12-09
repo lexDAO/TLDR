@@ -1,1 +1,1060 @@
-[{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"spender","type":"address"},{"name":"amount","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"dcNumber","type":"uint256"}],"name":"revokeDC","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"lastActionTimestamp","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"drNumber","type":"uint256"},{"name":"clientDelegate","type":"address"}],"name":"delegateDRclient","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"drNumber","type":"uint256"}],"name":"confirmDR","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"sender","type":"address"},{"name":"recipient","type":"address"},{"name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"submitLEXreputation","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"client","type":"address"},{"name":"drToken","type":"address"},{"name":"deliverable","type":"string"},{"name":"retainerDuration","type":"uint256"},{"name":"deliverableRate","type":"uint256"},{"name":"payCap","type":"uint256"},{"name":"lexID","type":"uint256"}],"name":"registerDR","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"lastSuperActionTimestamp","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"spender","type":"address"},{"name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"RDC","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"account","type":"address"}],"name":"removeScribe","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"drNumber","type":"uint256"},{"name":"clientAward","type":"uint256"},{"name":"providerAward","type":"uint256"}],"name":"resolveDR","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"lexDAO","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"lexID","type":"uint256"},{"name":"templateTerms","type":"string"},{"name":"lexAddress","type":"address"}],"name":"editLexScript","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"tldrAddress","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"drNumber","type":"uint256"}],"name":"disputeDR","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"drNumber","type":"uint256"}],"name":"payDR","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"renounceScribe","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"submitETHreputation","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[{"name":"account","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"x","type":"address"}],"name":"isReputable","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"drNumber","type":"uint256"}],"name":"withdrawRemainder","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"repairedLexScribe","type":"address"}],"name":"repairScribeRep","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"templateTerms","type":"string"},{"name":"lexRate","type":"uint256"},{"name":"lexAddress","type":"address"}],"name":"writeLexScript","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"RDR","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"spender","type":"address"},{"name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"lexScript","outputs":[{"name":"lexScribe","type":"address"},{"name":"lexAddress","type":"address"},{"name":"templateTerms","type":"string"},{"name":"lexID","type":"uint256"},{"name":"lexVersion","type":"uint256"},{"name":"lexRate","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"recipient","type":"address"},{"name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"newLexDAO","type":"address"}],"name":"updateLexDAO","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"reputation","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"account","type":"address"}],"name":"addScribe","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"account","type":"address"}],"name":"isScribe","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"rdc","outputs":[{"name":"signatory","type":"address"},{"name":"templateTerms","type":"string"},{"name":"signatureDetails","type":"string"},{"name":"lexID","type":"uint256"},{"name":"dcNumber","type":"uint256"},{"name":"timeStamp","type":"uint256"},{"name":"revoked","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"reducedLexScribe","type":"address"}],"name":"reduceScribeRep","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"owner","type":"address"},{"name":"spender","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"rdr","outputs":[{"name":"client","type":"address"},{"name":"provider","type":"address"},{"name":"drToken","type":"address"},{"name":"deliverable","type":"string"},{"name":"lexID","type":"uint256"},{"name":"drNumber","type":"uint256"},{"name":"timeStamp","type":"uint256"},{"name":"retainerTermination","type":"uint256"},{"name":"deliverableRate","type":"uint256"},{"name":"paid","type":"uint256"},{"name":"payCap","type":"uint256"},{"name":"confirmed","type":"bool"},{"name":"disputed","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"lexID","type":"uint256"},{"name":"signatureDetails","type":"string"}],"name":"signDC","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"LSW","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"tldrTerms","type":"string"},{"name":"tldrLexRate","type":"uint256"},{"name":"tldrLexAddress","type":"address"},{"name":"_lexDAO","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"lexID","type":"uint256"},{"indexed":true,"name":"lexVersion","type":"uint256"},{"indexed":true,"name":"lexScribe","type":"address"}],"name":"Enscribed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"lexID","type":"uint256"},{"indexed":true,"name":"dcNumber","type":"uint256"},{"indexed":true,"name":"signatory","type":"address"}],"name":"Signed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"drNumber","type":"uint256"},{"indexed":true,"name":"lexID","type":"uint256"},{"indexed":true,"name":"provider","type":"address"}],"name":"Registered","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"drNumber","type":"uint256"},{"indexed":true,"name":"lexID","type":"uint256"},{"indexed":true,"name":"client","type":"address"}],"name":"Confirmed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"drNumber","type":"uint256"},{"indexed":true,"name":"lexID","type":"uint256"}],"name":"Paid","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"drNumber","type":"uint256"}],"name":"Disputed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"drNumber","type":"uint256"}],"name":"Resolved","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"account","type":"address"}],"name":"ScribeAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"account","type":"address"}],"name":"ScribeRemoved","type":"event"}]
+[
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "name",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "spender",
+				"type": "address"
+			},
+			{
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "approve",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "dcNumber",
+				"type": "uint256"
+			}
+		],
+		"name": "revokeDC",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "lastActionTimestamp",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "drNumber",
+				"type": "uint256"
+			},
+			{
+				"name": "clientDelegate",
+				"type": "address"
+			}
+		],
+		"name": "delegateDRclient",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "drNumber",
+				"type": "uint256"
+			}
+		],
+		"name": "confirmDR",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "totalSupply",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "sender",
+				"type": "address"
+			},
+			{
+				"name": "recipient",
+				"type": "address"
+			},
+			{
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "transferFrom",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "decimals",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "submitLEXreputation",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "client",
+				"type": "address"
+			},
+			{
+				"name": "drToken",
+				"type": "address"
+			},
+			{
+				"name": "deliverable",
+				"type": "string"
+			},
+			{
+				"name": "retainerDuration",
+				"type": "uint256"
+			},
+			{
+				"name": "deliverableRate",
+				"type": "uint256"
+			},
+			{
+				"name": "payCap",
+				"type": "uint256"
+			},
+			{
+				"name": "lexID",
+				"type": "uint256"
+			}
+		],
+		"name": "registerDR",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "lastSuperActionTimestamp",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "spender",
+				"type": "address"
+			},
+			{
+				"name": "addedValue",
+				"type": "uint256"
+			}
+		],
+		"name": "increaseAllowance",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "RDC",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "account",
+				"type": "address"
+			}
+		],
+		"name": "removeScribe",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "drNumber",
+				"type": "uint256"
+			},
+			{
+				"name": "clientAward",
+				"type": "uint256"
+			},
+			{
+				"name": "providerAward",
+				"type": "uint256"
+			}
+		],
+		"name": "resolveDR",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "lexDAO",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "lexID",
+				"type": "uint256"
+			},
+			{
+				"name": "templateTerms",
+				"type": "string"
+			},
+			{
+				"name": "lexAddress",
+				"type": "address"
+			}
+		],
+		"name": "editLexScript",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "tldrAddress",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "drNumber",
+				"type": "uint256"
+			}
+		],
+		"name": "disputeDR",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "drNumber",
+				"type": "uint256"
+			}
+		],
+		"name": "payDR",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "renounceScribe",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "submitETHreputation",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "account",
+				"type": "address"
+			}
+		],
+		"name": "balanceOf",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "x",
+				"type": "address"
+			}
+		],
+		"name": "isReputable",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "drNumber",
+				"type": "uint256"
+			}
+		],
+		"name": "withdrawRemainder",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "repairedLexScribe",
+				"type": "address"
+			}
+		],
+		"name": "repairScribeRep",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "templateTerms",
+				"type": "string"
+			},
+			{
+				"name": "lexRate",
+				"type": "uint256"
+			},
+			{
+				"name": "lexAddress",
+				"type": "address"
+			}
+		],
+		"name": "writeLexScript",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "symbol",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "RDR",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "spender",
+				"type": "address"
+			},
+			{
+				"name": "subtractedValue",
+				"type": "uint256"
+			}
+		],
+		"name": "decreaseAllowance",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "lexScript",
+		"outputs": [
+			{
+				"name": "lexScribe",
+				"type": "address"
+			},
+			{
+				"name": "lexAddress",
+				"type": "address"
+			},
+			{
+				"name": "templateTerms",
+				"type": "string"
+			},
+			{
+				"name": "lexID",
+				"type": "uint256"
+			},
+			{
+				"name": "lexVersion",
+				"type": "uint256"
+			},
+			{
+				"name": "lexRate",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "recipient",
+				"type": "address"
+			},
+			{
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "transfer",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "newLexDAO",
+				"type": "address"
+			}
+		],
+		"name": "updateLexDAO",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "reputation",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "account",
+				"type": "address"
+			}
+		],
+		"name": "addScribe",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "account",
+				"type": "address"
+			}
+		],
+		"name": "isScribe",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "rdc",
+		"outputs": [
+			{
+				"name": "signatory",
+				"type": "address"
+			},
+			{
+				"name": "templateTerms",
+				"type": "string"
+			},
+			{
+				"name": "signatureDetails",
+				"type": "string"
+			},
+			{
+				"name": "lexID",
+				"type": "uint256"
+			},
+			{
+				"name": "dcNumber",
+				"type": "uint256"
+			},
+			{
+				"name": "timeStamp",
+				"type": "uint256"
+			},
+			{
+				"name": "revoked",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "reducedLexScribe",
+				"type": "address"
+			}
+		],
+		"name": "reduceScribeRep",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"name": "spender",
+				"type": "address"
+			}
+		],
+		"name": "allowance",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "rdr",
+		"outputs": [
+			{
+				"name": "client",
+				"type": "address"
+			},
+			{
+				"name": "provider",
+				"type": "address"
+			},
+			{
+				"name": "drToken",
+				"type": "address"
+			},
+			{
+				"name": "deliverable",
+				"type": "string"
+			},
+			{
+				"name": "lexID",
+				"type": "uint256"
+			},
+			{
+				"name": "drNumber",
+				"type": "uint256"
+			},
+			{
+				"name": "timeStamp",
+				"type": "uint256"
+			},
+			{
+				"name": "retainerTermination",
+				"type": "uint256"
+			},
+			{
+				"name": "deliverableRate",
+				"type": "uint256"
+			},
+			{
+				"name": "paid",
+				"type": "uint256"
+			},
+			{
+				"name": "payCap",
+				"type": "uint256"
+			},
+			{
+				"name": "confirmed",
+				"type": "bool"
+			},
+			{
+				"name": "disputed",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "lexID",
+				"type": "uint256"
+			},
+			{
+				"name": "signatureDetails",
+				"type": "string"
+			}
+		],
+		"name": "signDC",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "LSW",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"name": "tldrTerms",
+				"type": "string"
+			},
+			{
+				"name": "tldrLexRate",
+				"type": "uint256"
+			},
+			{
+				"name": "tldrLexAddress",
+				"type": "address"
+			},
+			{
+				"name": "_lexDAO",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "lexID",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "lexVersion",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "lexScribe",
+				"type": "address"
+			}
+		],
+		"name": "Enscribed",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "lexID",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "dcNumber",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "signatory",
+				"type": "address"
+			}
+		],
+		"name": "Signed",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "drNumber",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "lexID",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "provider",
+				"type": "address"
+			}
+		],
+		"name": "Registered",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "drNumber",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "lexID",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "client",
+				"type": "address"
+			}
+		],
+		"name": "Confirmed",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "drNumber",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "lexID",
+				"type": "uint256"
+			}
+		],
+		"name": "Paid",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "drNumber",
+				"type": "uint256"
+			}
+		],
+		"name": "Disputed",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "drNumber",
+				"type": "uint256"
+			}
+		],
+		"name": "Resolved",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "Transfer",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "spender",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "Approval",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "account",
+				"type": "address"
+			}
+		],
+		"name": "ScribeAdded",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "account",
+				"type": "address"
+			}
+		],
+		"name": "ScribeRemoved",
+		"type": "event"
+	}
+]
