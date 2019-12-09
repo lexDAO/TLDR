@@ -12,68 +12,73 @@ import {
 import ERC20 from "../contracts/ERC20.json";
 
 export default function Submit({ web3, accounts, contract }) {
-  const [clientDDRs, setClientDDRs] = useState();
-  const [providerDDRs, setProviderDDRs] = useState();
+  const [clientDRs, setClientDRs] = useState();
+  const [providerDRs, setProviderDRs] = useState();
   const [activeKey, setActiveKey] = useState();
   const [clientSelected, setClientSelected] = useState(true);
-  const [mappedArray, setMappedArray] = useState(clientDDRs);
+  const [mappedArray, setMappedArray] = useState(clientDRs);
 
-  const [activeDDR, setActiveDDR] = useState();
-  const [ddrSelected, setDDRSelected] = useState(false);
-  const [ddrTokenContract, setDDRTokenContract] = useState();
+  const [activeDR, setactiveDR] = useState();
+  const [drSelected, setDRSelected] = useState(false);
+  const [drTokenContract, setDRTokenContract] = useState();
 
-  const getDDR = async () => {
-    const numDDR = await contract.methods.RDDR().call();
-    const DDRPromise = [...Array(parseInt(numDDR)).keys()].map(index =>
-      contract.methods.rddr(index + 1).call({ from: accounts[0], gas: 300000 })
+  const [loading, setLoading] = useState(false)
+
+  const getDR = async () => {
+    const numDR = await contract.methods.RDR().call();
+    const DRPromise = [...Array(parseInt(numDR)).keys()].map(index =>
+      contract.methods.rdr(index + 1).call({ from: accounts[0], gas: 300000 })
     );
 
-    const DDRs = await Promise.all(DDRPromise);
-    console.log(DDRs);
-    const myClientDDRs = DDRs.filter(ddr => accounts[0] === ddr.client);
-    const myProviderDDRs = DDRs.filter(ddr => accounts[0] === ddr.provider);
+    const DRs = await Promise.all(DRPromise);
+    console.log(DRs);
+    const myClientDRs = DRs.filter(dr => accounts[0] === dr.client);
+    const myProviderDRs = DRs.filter(dr => accounts[0] === dr.provider);
 
-    setClientDDRs(myClientDDRs);
-    setProviderDDRs(myProviderDDRs);
+    setClientDRs(myClientDRs);
+    setProviderDRs(myProviderDRs);
   };
 
   const getTokenContract = async () => {
     const erc20Instance = await new web3.eth.Contract(
       ERC20.abi,
-      activeDDR.ddrToken
+      activeDR.drToken
     );
 
     return erc20Instance;
   };
 
-  const setActive = (ddr, i) => {
-    setActiveDDR(ddr);
-    setDDRSelected(true);
+  const setActive = (dr, i) => {
+    setactiveDR(dr);
+    setDRSelected(true);
     setActiveKey(i);
   };
 
   const makePayment = async () => {
     console.log("calling make payment");
     const res = await contract.methods
-      .payDDR(activeDDR.ddrNumber)
+      .payDR(activeDR.drNumber)
       .send({ from: accounts[0], gas: 300000 });
     console.log(res);
   };
 
-  const confirmDDR = async () => {
+  const confirmDR = async () => {
+    setLoading(true)
     const tokenInstance = await getTokenContract();
     await tokenInstance.methods
-      .approve(contract._address, activeDDR.payCap)
+      .approve(contract._address, activeDR.payCap)
       .send({ from: accounts[0], gas: 300000 });
 
     const res = await contract.methods
-      .confirmDDR(activeDDR.ddrNumber)
+      .confirmDR(activeDR.drNumber)
       .send({ from: accounts[0], gas: 300000 });
+
+    setLoading(false)
     console.log(res);
   };
 
   useEffect(() => {
-    getDDR();
+    getDR();
   }, []);
 
   return (
@@ -83,13 +88,19 @@ export default function Submit({ web3, accounts, contract }) {
           <Header as="h3">Your Digital Retainers</Header>
           <Button.Group>
             <Button
-              onClick={() => setClientSelected(true)}
+              onClick={() => {
+                setClientSelected(true);
+                setDRSelected(false);
+              }}
               active={clientSelected}
             >
               Client
             </Button>
             <Button
-              onClick={() => setClientSelected(false)}
+              onClick={() => {
+                setClientSelected(false);
+                setDRSelected(false);
+              }}
               active={!clientSelected}
             >
               Provider
@@ -98,14 +109,14 @@ export default function Submit({ web3, accounts, contract }) {
           <Table basic="very" celled>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell width={4}>DDR #</Table.HeaderCell>
+                <Table.HeaderCell width={4}>DR #</Table.HeaderCell>
                 <Table.HeaderCell width={12}>Deliverable</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>
               {clientSelected &&
-                clientDDRs &&
-                clientDDRs.map((ddr, i) => (
+                clientDRs &&
+                clientDRs.map((dr, i) => (
                   <Table.Row
                     style={activeKey === i ? { fontWeight: "bold" } : null}
                     key={i}
@@ -113,18 +124,18 @@ export default function Submit({ web3, accounts, contract }) {
                     <Table.Cell>
                       <span
                         className="fake-link"
-                        onClick={() => setActive(ddr, i)}
+                        onClick={() => setActive(dr, i)}
                       >
-                        {ddr.ddrNumber}
+                        {dr.drNumber}
                       </span>
                     </Table.Cell>
-                    <Table.Cell>{ddr.deliverable}</Table.Cell>
+                    <Table.Cell>{dr.deliverable}</Table.Cell>
                   </Table.Row>
                 ))}
 
               {!clientSelected &&
-                providerDDRs &&
-                providerDDRs.map((ddr, i) => (
+                providerDRs &&
+                providerDRs.map((dr, i) => (
                   <Table.Row
                     style={activeKey === i ? { fontWeight: "bold" } : null}
                     key={i}
@@ -132,12 +143,12 @@ export default function Submit({ web3, accounts, contract }) {
                     <Table.Cell>
                       <span
                         className="fake-link"
-                        onClick={() => setActive(ddr, i)}
+                        onClick={() => setActive(dr, i)}
                       >
-                        {ddr.ddrNumber}
+                        {dr.drNumber}
                       </span>
                     </Table.Cell>
-                    <Table.Cell>{ddr.deliverable}</Table.Cell>
+                    <Table.Cell>{dr.deliverable}</Table.Cell>
                   </Table.Row>
                 ))}
             </Table.Body>
@@ -147,16 +158,19 @@ export default function Submit({ web3, accounts, contract }) {
           <Header as="h3">Manage Digital Retainer</Header>
 
           {clientSelected &&
-            ddrSelected &&
-            (activeDDR.confirmed ? (
+            drSelected &&
+            (activeDR.confirmed ? (
               <Form>
                 <Form.Field>
                   <label>Payment being made to</label>
-                  <input value={activeDDR.provider} disabled={true} />
+                  <input value={activeDR.provider} disabled={true} />
                 </Form.Field>
                 <Form.Field>
                   <label>Deliverable Payment (in ERC20 tokens)</label>
-                  <input value={web3.utils.fromWei(activeDDR.deliverableRate)} disabled={true} />
+                  <input
+                    value={web3.utils.fromWei(activeDR.deliverableRate)}
+                    disabled={true}
+                  />
                 </Form.Field>
                 <Button type="submit" onClick={() => makePayment()}>
                   Submit
@@ -165,23 +179,29 @@ export default function Submit({ web3, accounts, contract }) {
             ) : (
               <Form>
                 <Message>
-                  You are about to transfer <b>{activeDDR.payCap}</b> into
-                  escrow at the smart contract address{" "}
-                  <b>{activeDDR.ddrToken}</b> for entering into a Digital Dollar
-                  Retainer with <b>{activeDDR.provider}</b>. Do you wish to
-                  confirm?
+                  You are about to transfer <b>{web3.utils.fromWei(activeDR.payCap)}</b> DAI into escrow
+                  at the smart contract address <b>{activeDR.drToken}</b> for
+                  entering into a Digital Dollar Retainer with{" "}
+                  <b>{activeDR.provider}</b>. Do you wish to confirm?
                 </Message>
-                <Button type="submit" onClick={() => confirmDDR()}>
+                <Button loading={loading} type="submit" onClick={() => confirmDR()}>
                   Confirm
                 </Button>
               </Form>
             ))}
 
-          {!clientSelected && ddrSelected && (
+          {!clientSelected && drSelected && (
             <Form>
               <Message>
-                <b>{web3.utils.fromWei(activeDDR.client)}</b> has so far paid{" "}
-                <b>{web3.utils.fromWei(activeDDR.paid)}</b> of the total <b>{activeDDR.payCap}</b> cap. There are <b>{Math.abs((activeDDR.retainerTermination - Date.now()/1000)/86400).toFixed(2)}</b> days left in the retainer
+                <b>{activeDR.client}</b> has so far paid{" "}
+                <b>{web3.utils.fromWei(activeDR.paid)}</b> DAI of the total{" "}
+                <b>{web3.utils.fromWei(activeDR.payCap)}</b> DAI cap. There are{" "}
+                <b>
+                  {Math.abs(
+                    (activeDR.retainerTermination - Date.now() / 1000) / 86400
+                  ).toFixed(2)}
+                </b>{" "}
+                days left in the retainer
               </Message>
             </Form>
           )}

@@ -14,9 +14,9 @@ export default function Register({ web3, accounts, contract }) {
   const [lexScriptID, setlexID] = useState(1);
   const [lexScript, setLexScript] = useState();
 
-  // Register DDR
+  // Register DD
   const [client, setClient] = useState();
-  const [DDRToken, setDDRToken] = useState(
+  const [DRToken, setDRToken] = useState(
     "0x6B175474E89094C44Da98b954EedeAC495271d0F"
   );
   const [deliverable, setDeliverable] = useState();
@@ -35,16 +35,15 @@ export default function Register({ web3, accounts, contract }) {
     getLex();
   });
 
-  const registerDDR = async () => {
+  const registerDR = async () => {
     const res = await contract.methods
-      .registerDDR(
+      .registerDR(
         client,
-        accounts[0],
-        DDRToken,
+        DRToken,
         deliverable,
         retainerDuration * 86400,
         deliverableRate,
-        payCap,
+        web3.utils.toWei(payCap),
         lexScriptID
       )
       .send({ from: accounts[0], gas: 300000 });
@@ -110,11 +109,11 @@ export default function Register({ web3, accounts, contract }) {
             <Form.Field
               control={Input}
               placeholder="1"
-              label="Pay Cap"
+              label="Pay Cap (in DAI)"
               value={payCap}
-              onChange={e => setPayCap(web3.utils.toWei(e.target.value))}
+              onChange={e => setPayCap(e.target.value)}
             />
-            <Button type="submit" onClick={registerDDR}>
+            <Button type="submit" onClick={registerDR}>
               Submit
             </Button>
           </Form>
