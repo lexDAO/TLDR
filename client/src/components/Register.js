@@ -42,7 +42,7 @@ export default function Register({ web3, accounts, contract }) {
         DRToken,
         deliverable,
         retainerDuration * 86400,
-        deliverableRate,
+        web3.utils.toWei(deliverableRate),
         web3.utils.toWei(payCap),
         lexScriptID
       )

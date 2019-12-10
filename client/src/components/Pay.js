@@ -31,7 +31,6 @@ export default function Submit({ web3, accounts, contract }) {
     );
 
     const DRs = await Promise.all(DRPromise);
-    console.log(DRs);
     const myClientDRs = DRs.filter(dr => accounts[0] === dr.client);
     const myProviderDRs = DRs.filter(dr => accounts[0] === dr.provider);
 
@@ -166,7 +165,7 @@ export default function Submit({ web3, accounts, contract }) {
                   <input value={activeDR.provider} disabled={true} />
                 </Form.Field>
                 <Form.Field>
-                  <label>Deliverable Payment (in ERC20 tokens)</label>
+                  <label>Deliverable Payment (in DAI)</label>
                   <input
                     value={web3.utils.fromWei(activeDR.deliverableRate)}
                     disabled={true}
