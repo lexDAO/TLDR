@@ -78,8 +78,8 @@ Reputable lexScribes within lexDAO are also able to resolve DDR disputes and cla
 
 ## TLDR Solidity Design
 
-[v0.1 Contract Review](https://hackmd.io/@9imjf7czSc-9k0W4HcSANw/B1djOpjFS)
+[Base Solidity Contract Review](https://hackmd.io/@9imjf7czSc-9k0W4HcSANw/B1djOpjFS)
 
-[v0.2 Solidity Map](https://etherscan.io/viewsvg?t=1&a=0x77eca7e76fbeb9c33d3ef0664f2b333205d48a77)
+[v0.3 Solidity Contract Map](https://etherscan.io/viewsvg?t=1&a=0x8CEDe32BbbCe5854992e151Fe215f2887E522553)
 
-![tldrSolidityMAP](https://storage.googleapis.com/sol2uml-storage/mainnet-0x77eca7e76fbeb9c33d3ef0664f2b333205d48a77.svg)
+![tldrSolidityMAP](https://storage.googleapis.com/sol2uml-storage/mainnet-0x8cede32bbbce5854992e151fe215f2887e522553.svg)
