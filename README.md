@@ -3,7 +3,7 @@ STEAL THIS C0D3SL4W
 # The lexDAO Registry ✒️ TLDR
 > Transactional Scripts for Legal and Ethereal Deal Security
 
-![lexDAO Club](.github/lexDAO/TLDR/blob/master/docs/images/lexDAOClubLandingPage.png)
+![lexDAO Club](.github/images/lexDAOClubLandingPage.png)
 
 🛠️ [Ethereum Mainnet Deployment](https://etherscan.io/address/0x8CEDe32BbbCe5854992e151Fe215f2887E522553) ⚡
 [lexDAO dApp (WIP)](https://youthful-cori-55b0b3.netlify.com/)
