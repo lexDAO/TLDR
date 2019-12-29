@@ -6,7 +6,7 @@ STEAL THIS C0D3SL4W
 ![lexDAO Club](.github/images/lexDAOClubLandingPage.png)
 
 🛠️ [Ethereum Mainnet Deployment](https://etherscan.io/address/0x8CEDe32BbbCe5854992e151Fe215f2887E522553) ⚡
-[lexDAO dApp (WIP)](https://youthful-cori-55b0b3.netlify.com/)
+[TLDR dApp (WIP)](https://lexdao.club/)
 
 TLDR is an interactive registry and market on Ethereum that allows anyone to select curated legal wrappers or *lexScript* for two main types of transactions also hosted by TLDR programming:
 
