@@ -2,7 +2,7 @@
 
 [Aragon Digital Organization](https://mainnet.aragon.org/#/lexdao/0xc191dc522672e10441bb9ee7c58946e9a8ebe4c0/)
 
-## lexScribes
+## lexScribes (15)
 | Name | Ethereum Address | [LEX](https://etherscan.io/token/0x8CEDe32BbbCe5854992e151Fe215f2887E522553) | 
 |----------|:-------------:|:-------------:| 
 | Ross Campbell | [`0x1C0Aa8cCD568d90d61659F060D1bFb1e6f855A20`](https://etherscan.io/address/0x1c0aa8ccd568d90d61659f060d1bfb1e6f855a20) | 1 | 
@@ -17,8 +17,9 @@
 | Nick Pullman | [`0xf8c75ebA4b580059168e5319F225e94c490d1AC9`](https://etherscan.io/address/0xf8c75ebA4b580059168e5319F225e94c490d1AC9) | 0 |
 | James McCall | [`0xd5B3988eD0AB5ec375E51bB6fd10e205cEC16A2E`](https://etherscan.io/address/0xd5B3988eD0AB5ec375E51bB6fd10e205cEC16A2E) | 0 |
 | Gerardo Greco | [`0x5e5a1fe17A444e1C3cccEd2684019bE51294aD1B`](https://etherscan.io/address/0x5e5a1fe17A444e1C3cccEd2684019bE51294aD1B) | 0 |
-
-
+| Scott Stevenson | [`0x130093A5aEbc07e78e16f0EcEF09d1c45AfD8178`](https://etherscan.io/address/0x130093A5aEbc07e78e16f0EcEF09d1c45AfD8178) | 0 |
+| Anja Blaj | [`0xe84C9e202Dc18e1107c8d096c4A2763265b9a07F`](https://etherscan.io/address/0xe84C9e202Dc18e1107c8d096c4A2763265b9a07F) | 0 |
+| Erich Dylus | [`0xb7f49E02552751b249caE86959fD50D887708B1D`](https://etherscan.io/address/0xb7f49E02552751b249caE86959fD50D887708B1D) | 0 |
 
 ## Transactions
 
