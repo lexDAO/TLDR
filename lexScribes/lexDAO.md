@@ -1,6 +1,8 @@
 # [lexDAO | LUTHOR](https://mainnet.aragon.org/#/lexdao/0x97103fda00a2b47eac669568063c00e65866a633/)
 
-[Aragon Digital Organization](https://mainnet.aragon.org/#/lexdao/0xc191dc522672e10441bb9ee7c58946e9a8ebe4c0/)
+[Aragon Digital Organization](https://mainnet.aragon.org/#/lexdao/0xc191dc522672e10441bb9ee7c58946e9a8ebe4c0/) 🦅
+
+[Beta Chat](http://13.59.183.200:3000/home) 💬
 
 ## lexScribes (15)
 | Name | Ethereum Address | [LEX](https://etherscan.io/token/0x8CEDe32BbbCe5854992e151Fe215f2887E522553) | 
