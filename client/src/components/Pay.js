@@ -22,7 +22,7 @@ export default function Submit({ web3, accounts, contract }) {
   const [drSelected, setDRSelected] = useState(false);
   const [drTokenContract, setDRTokenContract] = useState();
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const getDR = async () => {
     const numDR = await contract.methods.RDR().call();
@@ -31,8 +31,15 @@ export default function Submit({ web3, accounts, contract }) {
     );
 
     const DRs = await Promise.all(DRPromise);
-    const myClientDRs = DRs.filter(dr => accounts[0] === dr.client);
-    const myProviderDRs = DRs.filter(dr => accounts[0] === dr.provider);
+    const DRWithTokenPromise = DRs.map(dr => {
+      const tokenInstance = getTokenContract();
+      const tokenName = tokenInstance.symbol();
+      return { ...dr, tokenName };
+    });
+
+    const DRWithToken = await Promise.all(DRWithTokenPromise);
+    const myClientDRs = DRWithToken.filter(dr => accounts[0] === dr.client);
+    const myProviderDRs = DRWithToken.filter(dr => accounts[0] === dr.provider);
 
     setClientDRs(myClientDRs);
     setProviderDRs(myProviderDRs);
@@ -62,7 +69,7 @@ export default function Submit({ web3, accounts, contract }) {
   };
 
   const confirmDR = async () => {
-    setLoading(true)
+    setLoading(true);
     const tokenInstance = await getTokenContract();
     await tokenInstance.methods
       .approve(contract._address, activeDR.payCap)
@@ -72,7 +79,7 @@ export default function Submit({ web3, accounts, contract }) {
       .confirmDR(activeDR.drNumber)
       .send({ from: accounts[0], gas: 300000 });
 
-    setLoading(false)
+    setLoading(false);
     console.log(res);
   };
 
@@ -178,12 +185,17 @@ export default function Submit({ web3, accounts, contract }) {
             ) : (
               <Form>
                 <Message>
-                  You are about to transfer <b>{web3.utils.fromWei(activeDR.payCap)}</b> DAI into escrow
+                  You are about to transfer{" "}
+                  <b>{web3.utils.fromWei(activeDR.payCap)}</b> DAI into escrow
                   at the smart contract address <b>{activeDR.drToken}</b> for
                   entering into a Digital Dollar Retainer with{" "}
                   <b>{activeDR.provider}</b>. Do you wish to confirm?
                 </Message>
-                <Button loading={loading} type="submit" onClick={() => confirmDR()}>
+                <Button
+                  loading={loading}
+                  type="submit"
+                  onClick={() => confirmDR()}
+                >
                   Confirm
                 </Button>
               </Form>
