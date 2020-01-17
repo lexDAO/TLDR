@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Divider, Header, Container, Tab } from "semantic-ui-react";
 import TLDRContract from "./contracts/TLDR.json";
-import getWeb3 from "./utils/getWeb3";
+import getWeb3 from "@drizzle-utils/get-web3";
 import "./App.css";
 import Submit from "./components/Submit";
 import Register from "./components/Register";
@@ -41,7 +41,7 @@ export default function App() {
     document.body.style.backgroundImage =
       "linear-gradient(180deg, hsla(0, 0%, 100%, 0) 60%, #fff),linear-gradient(70deg, #dbedff 32%, #ebfff0)";
     fetchData();
-  });
+  }, []);
 
   const panes = [
     {

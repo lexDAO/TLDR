@@ -31,15 +31,15 @@ export default function Submit({ web3, accounts, contract }) {
     );
 
     const DRs = await Promise.all(DRPromise);
-    const DRWithTokenPromise = DRs.map(dr => {
-      const tokenInstance = getTokenContract();
-      const tokenName = tokenInstance.symbol();
-      return { ...dr, tokenName };
-    });
+    // const DRWithTokenPromise = DRs.map(dr => {
+    //   const tokenInstance = getTokenContract();
+    //   const tokenName = tokenInstance.symbol();
+    //   return { ...dr, tokenName };
+    // });
 
-    const DRWithToken = await Promise.all(DRWithTokenPromise);
-    const myClientDRs = DRWithToken.filter(dr => accounts[0] === dr.client);
-    const myProviderDRs = DRWithToken.filter(dr => accounts[0] === dr.provider);
+    // const DRWithToken = await Promise.all(DRWithTokenPromise);
+    const myClientDRs = DRs.filter(dr => accounts[0] === dr.client);
+    const myProviderDRs = DRs.filter(dr => accounts[0] === dr.provider);
 
     setClientDRs(myClientDRs);
     setProviderDRs(myProviderDRs);
