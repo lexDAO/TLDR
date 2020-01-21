@@ -44,19 +44,19 @@ export default function App() {
   }, []);
 
   const panes = [
-    {
-      menuItem: "Submit Template",
-      render: () => (
-        <Tab.Pane
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, rgba(150, 249, 222, 0.1), rgba(219, 237, 255, 0.3))"
-          }}
-        >
-          <Submit web3={web3} accounts={accounts} contract={contract} />
-        </Tab.Pane>
-      )
-    },
+    // {
+    //   menuItem: "Submit Template",
+    //   render: () => (
+    //     <Tab.Pane
+    //       style={{
+    //         backgroundImage:
+    //           "linear-gradient(to right, rgba(150, 249, 222, 0.1), rgba(219, 237, 255, 0.3))"
+    //       }}
+    //     >
+    //       <Submit web3={web3} accounts={accounts} contract={contract} />
+    //     </Tab.Pane>
+    //   )
+    // },
     {
       menuItem: "Register DR",
       render: () => (
