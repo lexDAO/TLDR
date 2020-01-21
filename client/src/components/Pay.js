@@ -11,7 +11,7 @@ import {
 } from "semantic-ui-react";
 import ERC20 from "../contracts/ERC20.json";
 
-export default function Submit({ web3, accounts, contract }) {
+export default function Pay({ web3, accounts, contract }) {
   const [clientDRs, setClientDRs] = useState();
   const [providerDRs, setProviderDRs] = useState();
   const [activeKey, setActiveKey] = useState();

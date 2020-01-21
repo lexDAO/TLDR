@@ -3,11 +3,21 @@ import {
   Button,
   Header,
   Form,
-  Segment,
+  Dropdown,
   Input,
   Message,
   Grid
 } from "semantic-ui-react";
+
+const options = [
+  { value: 1, text: "(1) General Retainer" },
+  { value: 2, text: "(2) Retainer for Goods" },
+  { value: 3, text: "(3) Retainer for Services" },
+  { value: 4, text: "(4) Grant Agreement" },
+  { value: 5, text: "(5) Loan Agreement" },
+  { value: 6, text: "(6) SAFE" },
+  { value: 7, text: "(7) HASHWRAP" }
+];
 
 export default function Register({ web3, accounts, contract }) {
   // Read LexScript Template
@@ -57,22 +67,25 @@ export default function Register({ web3, accounts, contract }) {
         <Grid.Column width={6}>
           <Header as="h3">Select/Read a LexScript</Header>
           <Form>
-            <Form.Field
-              control={Input}
-              placeholder="1"
-              label="LexScript ID"
-              value={lexScriptID}
-              onChange={e => setlexID(e.target.value)}
+            <Dropdown
+              selection
+              options={options}
+              defaultValue={lexScriptID}
+              onChange={(event, data) => {
+                setlexID(data.value)
+                getLex()
+              }}
             />
-            <Button type="submit" onClick={getLex}>
-              Submit
-            </Button>
           </Form>
           <Message
             color={"teal"}
-            style={{ minHeight: "33.5vh", overflowWrap: "break-word" }}
+            style={{
+              maxHeight: "33.5vh",
+              overflowWrap: "break-word",
+              overflowY: "auto"
+            }}
           >
-            {lexScript ? lexScript : "Please select a LexScript ID first"}
+            {lexScript ? lexScript : "Please select a valid LexScript ID first"}
           </Message>
         </Grid.Column>
         <Grid.Column width={10}>
