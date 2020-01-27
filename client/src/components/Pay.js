@@ -187,8 +187,8 @@ export default function Pay({ web3, accounts, contract }) {
                 <Message>
                   You are about to transfer{" "}
                   <b>{web3.utils.fromWei(activeDR.payCap)}</b> DAI into escrow
-                  at the smart contract address <b>{activeDR.drToken}</b> for
-                  entering into a Digital Dollar Retainer with{" "}
+                  at the smart contract address <b>0x8CEDe32BbbCe5854992e151Fe215f2887E522553</b> for
+                  entering into a Digital Retainer with{" "}
                   <b>{activeDR.provider}</b>. Do you wish to confirm?
                 </Message>
                 <Button
