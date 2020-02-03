@@ -72,7 +72,7 @@ export default function Register({ web3, accounts, contract }) {
               options={options}
               defaultValue={lexScriptID}
               onChange={(event, data) => {
-                setlexID(data.value)
+                setlexID(data.value + 14)
                 getLex()
               }}
             />

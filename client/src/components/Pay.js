@@ -21,7 +21,7 @@ export default function Pay({ web3, accounts, contract }) {
   const [activeDR, setactiveDR] = useState();
   const [drSelected, setDRSelected] = useState(false);
   const [drTokenContract, setDRTokenContract] = useState();
-
+  const [timeLeft, setTimeLeft] = useState();
   const [loading, setLoading] = useState(false);
 
   const getDR = async () => {
@@ -56,6 +56,10 @@ export default function Pay({ web3, accounts, contract }) {
 
   const setActive = (dr, i) => {
     setactiveDR(dr);
+    console.log(dr);
+    const timeLeft =
+      (dr.retainerTermination - Date.now() / 1000) / (86400).toFixed(2);
+    setTimeLeft(timeLeft);
     setDRSelected(true);
     setActiveKey(i);
   };
@@ -64,6 +68,13 @@ export default function Pay({ web3, accounts, contract }) {
     console.log("calling make payment");
     const res = await contract.methods
       .payDR(activeDR.drNumber)
+      .send({ from: accounts[0], gas: 300000 });
+    console.log(res);
+  };
+
+  const withdraw = async () => {
+    const res = await contract.methods
+      .withdrawRemainder(activeDR.drNumber)
       .send({ from: accounts[0], gas: 300000 });
     console.log(res);
   };
@@ -81,6 +92,61 @@ export default function Pay({ web3, accounts, contract }) {
 
     setLoading(false);
     console.log(res);
+  };
+
+  const renderClient = () => {
+    if (clientSelected && drSelected && activeDR.confirmed && timeLeft > 0) {
+      return (
+        <Form>
+          <Form.Field>
+            <label>Payment being made to</label>
+            <input value={activeDR.provider} disabled={true} />
+          </Form.Field>
+          <Form.Field>
+            <label>Deliverable Payment (in DAI)</label>
+            <input
+              value={web3.utils.fromWei(activeDR.deliverableRate)}
+              disabled={true}
+            />
+          </Form.Field>
+          <Button type="submit" onClick={() => makePayment()}>
+            Submit
+          </Button>
+        </Form>
+      );
+    }
+
+    if (clientSelected && drSelected && activeDR.confirmed && timeLeft <= 0) {
+      return (
+        <Form>
+          <Message>
+            The retainer has ended, withdraw your remaining{" "}
+            <b>{web3.utils.fromWei((activeDR.payCap - activeDR.paid).toString())}</b> DAI
+          </Message>
+          <Button loading={loading} type="submit" onClick={() => withdraw()}>
+            Confirm
+          </Button>
+        </Form>
+      );
+    }
+
+    if (clientSelected && drSelected && !activeDR.confirmed) {
+      return (
+        <Form>
+          <Message>
+            You are about to transfer{" "}
+            <b>{web3.utils.fromWei(activeDR.payCap)}</b> DAI into escrow at the
+            smart contract address{" "}
+            <b>0x8CEDe32BbbCe5854992e151Fe215f2887E522553</b> for entering into
+            a Digital Retainer with <b>{activeDR.provider}</b>. Do you wish to
+            confirm?
+          </Message>
+          <Button loading={loading} type="submit" onClick={() => confirmDR()}>
+            Confirm
+          </Button>
+        </Form>
+      );
+    }
   };
 
   useEffect(() => {
@@ -163,43 +229,7 @@ export default function Pay({ web3, accounts, contract }) {
         <Grid.Column width={6}>
           <Header as="h3">Manage Digital Retainer</Header>
 
-          {clientSelected &&
-            drSelected &&
-            (activeDR.confirmed ? (
-              <Form>
-                <Form.Field>
-                  <label>Payment being made to</label>
-                  <input value={activeDR.provider} disabled={true} />
-                </Form.Field>
-                <Form.Field>
-                  <label>Deliverable Payment (in DAI)</label>
-                  <input
-                    value={web3.utils.fromWei(activeDR.deliverableRate)}
-                    disabled={true}
-                  />
-                </Form.Field>
-                <Button type="submit" onClick={() => makePayment()}>
-                  Submit
-                </Button>
-              </Form>
-            ) : (
-              <Form>
-                <Message>
-                  You are about to transfer{" "}
-                  <b>{web3.utils.fromWei(activeDR.payCap)}</b> DAI into escrow
-                  at the smart contract address <b>0x8CEDe32BbbCe5854992e151Fe215f2887E522553</b> for
-                  entering into a Digital Retainer with{" "}
-                  <b>{activeDR.provider}</b>. Do you wish to confirm?
-                </Message>
-                <Button
-                  loading={loading}
-                  type="submit"
-                  onClick={() => confirmDR()}
-                >
-                  Confirm
-                </Button>
-              </Form>
-            ))}
+          {renderClient()}
 
           {!clientSelected && drSelected && (
             <Form>
@@ -207,12 +237,7 @@ export default function Pay({ web3, accounts, contract }) {
                 <b>{activeDR.client}</b> has so far paid{" "}
                 <b>{web3.utils.fromWei(activeDR.paid)}</b> DAI of the total{" "}
                 <b>{web3.utils.fromWei(activeDR.payCap)}</b> DAI cap. There are{" "}
-                <b>
-                  {Math.abs(
-                    (activeDR.retainerTermination - Date.now() / 1000) / 86400
-                  ).toFixed(2)}
-                </b>{" "}
-                days left in the retainer
+                <b>{timeLeft}</b> days left in the retainer
               </Message>
             </Form>
           )}

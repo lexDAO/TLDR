@@ -28,14 +28,14 @@ export default function Dispute() {
   });
 
   const openLawConfig = {
-    server: process.env.URL,
-    templateName: process.env.TEMPLATE_NAME,
-    userName: process.env.OPENLAW_USER,
-    password: process.env.OPENLAW_PASSWORD
+    server: process.env.REACT_APP_URL,
+    templateName: process.env.REACT_APP_TEMPLATE_NAME,
+    userName: process.env.REACT_APP_OPENLAW_USER,
+    password: process.env.REACT_APP_OPENLAW_PASSWORD
   };
 
   const instantiateOLClient = async () => {
-    const newapiClient = new APIClient(openLawConfig.server);
+    const newapiClient = new APIClient("https://app.openlaw.io");
     newapiClient
       .login(openLawConfig.userName, openLawConfig.password)
       .then(console.log);
@@ -78,6 +78,8 @@ export default function Dispute() {
       executionResult,
       variables
     });
+
+    console.log(state)
   };
 
   useEffect(() => {
@@ -103,9 +105,10 @@ export default function Dispute() {
     setState({ ...state, parameters, variables, executionResult });
   };
 
+  if (!state.executionResult) return <Loader active />;
   return (
     <div className="App">
-      {/* <Container>
+      <Container>
       <OpenLawForm
           apiClient={apiClient}
           executionResult={state.executionResult}
@@ -114,7 +117,7 @@ export default function Dispute() {
           openLaw={Openlaw}
           variables={state.variables}
         />
-      </Container> */}
+      </Container>
     </div>
   );
 }

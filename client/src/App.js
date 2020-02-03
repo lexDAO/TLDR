@@ -71,19 +71,19 @@ export default function App() {
         </Tab.Pane>
       )
     },
-    {
-      menuItem: "Dispute DR",
-      render: () => (
-        <Tab.Pane
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, rgba(150, 249, 222, 0.1), rgba(219, 237, 255, 0.3))"
-        }}
-        >
-          <Dispute web3={web3} accounts={accounts} contract={contract} />
-        </Tab.Pane>
-      )
-    }
+    // {
+    //   menuItem: "Dispute DR",
+    //   render: () => (
+    //     <Tab.Pane
+    //     style={{
+    //       backgroundImage:
+    //         "linear-gradient(to right, rgba(150, 249, 222, 0.1), rgba(219, 237, 255, 0.3))"
+    //     }}
+    //     >
+    //       <Dispute web3={web3} accounts={accounts} contract={contract} />
+    //     </Tab.Pane>
+    //   )
+    // }
   ];
 
   if (!web3) {
