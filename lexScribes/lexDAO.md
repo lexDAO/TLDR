@@ -4,7 +4,7 @@
 
 [Beta Chat](http://13.59.183.200:3000/home) 💬
 
-## lexScribes (15)
+## lexScribes (16)
 | Name | Ethereum Address | [LEX](https://etherscan.io/token/0x8CEDe32BbbCe5854992e151Fe215f2887E522553) | 
 |----------|:-------------:|:-------------:| 
 | Ross Campbell | [`0x1C0Aa8cCD568d90d61659F060D1bFb1e6f855A20`](https://etherscan.io/address/0x1c0aa8ccd568d90d61659f060d1bfb1e6f855a20) | 12 | 
