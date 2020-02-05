@@ -23,6 +23,7 @@ export default function Pay({ web3, accounts, contract }) {
   const [drTokenContract, setDRTokenContract] = useState();
   const [timeLeft, setTimeLeft] = useState();
   const [loading, setLoading] = useState(false);
+  const [disputeLoading, setDisputeLoading] = useState(false)
 
   const getDR = async () => {
     const numDR = await contract.methods.RDR().call();
@@ -73,9 +74,22 @@ export default function Pay({ web3, accounts, contract }) {
   };
 
   const withdraw = async () => {
+    setLoading(true);
     const res = await contract.methods
       .withdrawRemainder(activeDR.drNumber)
       .send({ from: accounts[0], gas: 300000 });
+
+    setLoading(false);
+    console.log(res);
+  };
+
+  const dispute = async () => {
+    setDisputeLoading(true);
+    const res = await contract.methods
+      .disputeDR(activeDR.drNumber)
+      .send({ from: accounts[0], gas: 300000 });
+
+    setDisputeLoading(false);
     console.log(res);
   };
 
@@ -112,6 +126,15 @@ export default function Pay({ web3, accounts, contract }) {
           <Button type="submit" onClick={() => makePayment()}>
             Submit
           </Button>
+          <Button
+            color = "red"
+            loading={disputeLoading}
+            disabled={activeDR.disputed}
+            type="submit"
+            onClick={() => dispute()}
+          >
+            {activeDR.disputed ? "Disputed" : "Dispute"}
+          </Button>
         </Form>
       );
     }
@@ -121,7 +144,10 @@ export default function Pay({ web3, accounts, contract }) {
         <Form>
           <Message>
             The retainer has ended, withdraw your remaining{" "}
-            <b>{web3.utils.fromWei((activeDR.payCap - activeDR.paid).toString())}</b> DAI
+            <b>
+              {web3.utils.fromWei((activeDR.payCap - activeDR.paid).toString())}
+            </b>{" "}
+            DAI
           </Message>
           <Button loading={loading} type="submit" onClick={() => withdraw()}>
             Confirm
@@ -237,8 +263,18 @@ export default function Pay({ web3, accounts, contract }) {
                 <b>{activeDR.client}</b> has so far paid{" "}
                 <b>{web3.utils.fromWei(activeDR.paid)}</b> DAI of the total{" "}
                 <b>{web3.utils.fromWei(activeDR.payCap)}</b> DAI cap. There are{" "}
-                <b>{timeLeft}</b> days left in the retainer
+                <b>{timeLeft.toFixed(2)}</b> days left in the retainer
               </Message>
+
+              <Button
+            color = "red"
+            loading={disputeLoading}
+            disabled={activeDR.disputed}
+            type="submit"
+            onClick={() => dispute()}
+          >
+            {activeDR.disputed ? "Disputed" : "Dispute"}
+          </Button>
             </Form>
           )}
         </Grid.Column>
