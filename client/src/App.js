@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Divider, Header, Container, Tab } from "semantic-ui-react";
+import {
+  Divider,
+  Header,
+  Container,
+  Tab,
+  Button,
+  Item,
+  Label
+} from "semantic-ui-react";
 import TLDRContract from "./contracts/TLDR.json";
 import getWeb3 from "@drizzle-utils/get-web3";
 import "./App.css";
 import Submit from "./components/Submit";
 import Register from "./components/Register";
 import Pay from "./components/Pay";
-import Dispute from "./components/Dispute"
+import Dispute from "./components/Dispute";
 
 export default function App() {
   const [web3, setWeb3] = useState(0);
@@ -49,10 +57,10 @@ export default function App() {
       menuItem: "Register DR",
       render: () => (
         <Tab.Pane
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, rgba(150, 249, 222, 0.1), rgba(219, 237, 255, 0.3))"
-        }}
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, rgba(150, 249, 222, 0.1), rgba(219, 237, 255, 0.3))"
+          }}
         >
           <Register web3={web3} accounts={accounts} contract={contract} />
         </Tab.Pane>
@@ -62,15 +70,15 @@ export default function App() {
       menuItem: "Manage DR",
       render: () => (
         <Tab.Pane
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, rgba(150, 249, 222, 0.1), rgba(219, 237, 255, 0.3))"
-        }}
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, rgba(150, 249, 222, 0.1), rgba(219, 237, 255, 0.3))"
+          }}
         >
           <Pay web3={web3} accounts={accounts} contract={contract} />
         </Tab.Pane>
       )
-    },
+    }
     // {
     //   menuItem: "Dispute DR",
     //   render: () => (
@@ -96,12 +104,18 @@ export default function App() {
         <Header as="h1" color="grey" size="huge">
           🖋️ TLDR
         </Header>
-        <Header as="h2" color="grey">The lexDAO Registry</Header>
+        <Header as="h2" color="grey">
+          The lexDAO Registry
+        </Header>
         <Tab
           menu={{ tabular: true }}
           panes={panes}
           style={{ paddingTop: "25px" }}
         />
+        <Label style={{ background: "none", paddingTop: "15px" }} as="a" href="http://13.59.183.200:3000/home" target="_blank">
+          <Button color="google plus" size="large" circular icon="rocketchat" />
+          <span style={{ fontSize: "1.5em" }}>Join the conversation</span>
+        </Label>
       </Container>
     </div>
   );
