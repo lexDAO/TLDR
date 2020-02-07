@@ -14,12 +14,13 @@ import "./App.css";
 import Submit from "./components/Submit";
 import Register from "./components/Register";
 import Pay from "./components/Pay";
-import Dispute from "./components/Dispute";
+import Pulse from "./components/Pulse";
 
 export default function App() {
   const [web3, setWeb3] = useState(0);
   const [accounts, setAccounts] = useState();
   const [contract, setContract] = useState();
+  const [ownerBalances, setOwnerBalances] = useState();
 
   const fetchData = async () => {
     try {
@@ -32,13 +33,34 @@ export default function App() {
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
       const deployedNetwork = TLDRContract.networks[networkId];
-      const instance = new web3.eth.Contract(
+      const contract = new web3.eth.Contract(
         TLDRContract.abi,
         deployedNetwork && deployedNetwork.address
       );
       setWeb3(web3);
       setAccounts(accounts);
-      setContract(instance);
+      setContract(contract);
+      const startBlock = 9028576;
+      const endBlock = await web3.eth.getBlockNumber();
+      const events = await contract.getPastEvents("Transfer", {
+        fromBlock: startBlock,
+        toBlock: endBlock
+      });
+
+      const owners = [...new Set(events.map(x => x.returnValues.to))];
+      const balances = await Promise.all(
+        owners.map(addr => {
+          return contract.methods
+            .balanceOf(addr)
+            .call({ from: accounts[0], gas: 300000 });
+        })
+      );
+
+      const ownerBalances = owners.map((owner, i) => {
+        return {[owner]: web3.utils.fromWei(balances[i])}
+      })
+
+      setOwnerBalances(ownerBalances)
     } catch (error) {
       alert(
         `Failed to load web3, accounts, or contract. Check console for details.`
@@ -78,7 +100,21 @@ export default function App() {
           <Pay web3={web3} accounts={accounts} contract={contract} />
         </Tab.Pane>
       )
+    },
+    {
+      menuItem: "lexPULSE",
+      render: () => (
+        <Tab.Pane
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, rgba(150, 249, 222, 0.1), rgba(219, 237, 255, 0.3))"
+          }}
+        >
+          <Pulse ownerBalances={ownerBalances}web3={web3} accounts={accounts} contract={contract} />
+        </Tab.Pane>
+      )
     }
+
     // {
     //   menuItem: "Dispute DR",
     //   render: () => (
@@ -112,7 +148,12 @@ export default function App() {
           panes={panes}
           style={{ paddingTop: "25px" }}
         />
-        <Label style={{ background: "none", paddingTop: "15px" }} as="a" href="http://13.59.183.200:3000/home" target="_blank">
+        <Label
+          style={{ background: "none", paddingTop: "15px" }}
+          as="a"
+          href="http://13.59.183.200:3000/home"
+          target="_blank"
+        >
           <Button color="google plus" size="large" circular icon="rocketchat" />
           <span style={{ fontSize: "1.5em" }}>Join the conversation</span>
         </Label>
