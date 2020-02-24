@@ -35,7 +35,9 @@ export default function Dispute() {
   };
 
   const instantiateOLClient = async () => {
-    const newapiClient = new APIClient("https://app.openlaw.io");
+
+    console.log(openLawConfig)
+    const newapiClient = new APIClient("https://lib.openlaw.io/api/v1/default");
     newapiClient
       .login(openLawConfig.userName, openLawConfig.password)
       .then(console.log);

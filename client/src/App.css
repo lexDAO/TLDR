@@ -1,3 +1,8 @@
+body {
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+}
+
 .App {
   text-align: center;
 }
@@ -11,6 +16,11 @@
   color:#99CBFF;
   text-decoration: underline;
   cursor: pointer;
+}
+
+.openlaw-el-field__input, .openlaw-el-field__textarea {
+  border: 1px solid rgba(34,36,38,.15) !important;
+  box-shadow: none !important;
 }
 
 .App-header {

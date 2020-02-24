@@ -15,6 +15,7 @@ import Submit from "./components/Submit";
 import Register from "./components/Register";
 import Pay from "./components/Pay";
 import Pulse from "./components/Pulse";
+import Dispute from "./components/Dispute"
 
 export default function App() {
   const [web3, setWeb3] = useState(0);
@@ -113,21 +114,21 @@ export default function App() {
           <Pulse ownerBalances={ownerBalances}web3={web3} accounts={accounts} contract={contract} />
         </Tab.Pane>
       )
-    }
+    },
 
-    // {
-    //   menuItem: "Dispute DR",
-    //   render: () => (
-    //     <Tab.Pane
-    //     style={{
-    //       backgroundImage:
-    //         "linear-gradient(to right, rgba(150, 249, 222, 0.1), rgba(219, 237, 255, 0.3))"
-    //     }}
-    //     >
-    //       <Dispute web3={web3} accounts={accounts} contract={contract} />
-    //     </Tab.Pane>
-    //   )
-    // }
+    {
+      menuItem: "Dispute DR",
+      render: () => (
+        <Tab.Pane
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, rgba(150, 249, 222, 0.1), rgba(219, 237, 255, 0.3))"
+        }}
+        >
+          <Dispute web3={web3} accounts={accounts} contract={contract} />
+        </Tab.Pane>
+      )
+    }
   ];
 
   if (!web3) {
