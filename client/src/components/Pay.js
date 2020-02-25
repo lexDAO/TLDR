@@ -23,7 +23,7 @@ export default function Pay({ web3, accounts, contract }) {
   const [drTokenContract, setDRTokenContract] = useState();
   const [timeLeft, setTimeLeft] = useState();
   const [loading, setLoading] = useState(false);
-  const [disputeLoading, setDisputeLoading] = useState(false)
+  const [disputeLoading, setDisputeLoading] = useState(false);
 
   const getDR = async () => {
     const numDR = await contract.methods.RDR().call();
@@ -127,7 +127,7 @@ export default function Pay({ web3, accounts, contract }) {
             Submit
           </Button>
           <Button
-            color = "red"
+            color="red"
             loading={disputeLoading}
             disabled={activeDR.disputed}
             type="submit"
@@ -176,7 +176,9 @@ export default function Pay({ web3, accounts, contract }) {
   };
 
   useEffect(() => {
-    getDR();
+    if (contract) {
+      getDR();
+    }
   }, []);
 
   return (
@@ -267,14 +269,14 @@ export default function Pay({ web3, accounts, contract }) {
               </Message>
 
               <Button
-            color = "red"
-            loading={disputeLoading}
-            disabled={activeDR.disputed}
-            type="submit"
-            onClick={() => dispute()}
-          >
-            {activeDR.disputed ? "Disputed" : "Dispute"}
-          </Button>
+                color="red"
+                loading={disputeLoading}
+                disabled={activeDR.disputed}
+                type="submit"
+                onClick={() => dispute()}
+              >
+                {activeDR.disputed ? "Disputed" : "Dispute"}
+              </Button>
             </Form>
           )}
         </Grid.Column>

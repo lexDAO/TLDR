@@ -48,10 +48,15 @@ export default function Pulse({ ownerBalances, web3, accounts, contract }) {
 
   return (
     <Container textAlign="center">
-      <Header as="h3" floated='left'>
-        lexScribes 
+      <Header as="h3" floated="left">
+        lexScribes
       </Header>
-      <Table style={{width: '-webkit-fill-available', marginLeft: '15em'}} celled striped collapsing>
+      <Table
+        style={{ width: "-webkit-fill-available", marginLeft: "15em" }}
+        celled
+        striped
+        collapsing
+      >
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Address</Table.HeaderCell>
@@ -61,10 +66,15 @@ export default function Pulse({ ownerBalances, web3, accounts, contract }) {
         <Table.Body>{renderScribes()}</Table.Body>
       </Table>
 
-      <Header as="h3" floated='left'>
+      <Header as="h3" floated="left">
         Transactions
       </Header>
-      <Table style={{width: '-webkit-fill-available', marginLeft: '15em'}} celled striped collapsing>
+      <Table
+        style={{ width: "-webkit-fill-available", marginLeft: "15em" }}
+        celled
+        striped
+        collapsing
+      >
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>lexScript</Table.HeaderCell>
@@ -73,7 +83,7 @@ export default function Pulse({ ownerBalances, web3, accounts, contract }) {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-        <Table.Row>
+          <Table.Row>
             <Table.Cell>{lexNum}</Table.Cell>
             <Table.Cell>{retainerNum}</Table.Cell>
             <Table.Cell>{convenantNum}</Table.Cell>

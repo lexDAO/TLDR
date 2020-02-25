@@ -36,28 +36,23 @@ export default function Dispute() {
 
   const instantiateOLClient = async () => {
 
-    console.log(openLawConfig)
     const newapiClient = new APIClient("https://lib.openlaw.io/api/v1/default");
     newapiClient
       .login(openLawConfig.userName, openLawConfig.password)
-      .then(console.log);
 
     //Retrieve your OpenLaw template by name, use async/await
     const template = await newapiClient.getTemplate(openLawConfig.templateName);
-    console.log(template);
 
     //pull properties off of JSON and make into variables
     const title = template.title;
 
     //Retreive the OpenLaw Template, including MarkDown
     const content = template.content;
-    console.log("template..", template);
 
     const compiledTemplate = await Openlaw.compileTemplate(content);
     if (compiledTemplate.isError) {
       throw "template error" + compiledTemplate.errorMessage;
     }
-    console.log("my compiled template..", compiledTemplate);
 
     const parameters = {};
     const { executionResult, errorMessage } = await Openlaw.execute(
@@ -67,8 +62,7 @@ export default function Dispute() {
     );
 
     const variables = await Openlaw.getExecutedVariables(executionResult, {});
-    console.log("variables:", variables);
-
+    
     setapiClient(newapiClient);
     setState({
       ...state,
@@ -81,7 +75,6 @@ export default function Dispute() {
       variables
     });
 
-    console.log(state)
   };
 
   useEffect(() => {

@@ -6,7 +6,8 @@ import {
   Tab,
   Button,
   Item,
-  Label
+  Label,
+  Loader
 } from "semantic-ui-react";
 import TLDRContract from "./contracts/TLDR.json";
 import getWeb3 from "@drizzle-utils/get-web3";
@@ -15,7 +16,7 @@ import Submit from "./components/Submit";
 import Register from "./components/Register";
 import Pay from "./components/Pay";
 import Pulse from "./components/Pulse";
-import Dispute from "./components/Dispute"
+import Dispute from "./components/Dispute";
 
 export default function App() {
   const [web3, setWeb3] = useState(0);
@@ -58,10 +59,10 @@ export default function App() {
       );
 
       const ownerBalances = owners.map((owner, i) => {
-        return {[owner]: web3.utils.fromWei(balances[i])}
-      })
+        return { [owner]: web3.utils.fromWei(balances[i]) };
+      });
 
-      setOwnerBalances(ownerBalances)
+      setOwnerBalances(ownerBalances);
     } catch (error) {
       alert(
         `Failed to load web3, accounts, or contract. Check console for details.`
@@ -78,7 +79,7 @@ export default function App() {
   const panes = [
     {
       menuItem: "Register DR",
-      render: () => (
+      pane: (
         <Tab.Pane
           style={{
             backgroundImage:
@@ -91,7 +92,7 @@ export default function App() {
     },
     {
       menuItem: "Manage DR",
-      render: () => (
+      pane: (
         <Tab.Pane
           style={{
             backgroundImage:
@@ -104,26 +105,31 @@ export default function App() {
     },
     {
       menuItem: "lexPULSE",
-      render: () => (
+      pane: (
         <Tab.Pane
           style={{
             backgroundImage:
               "linear-gradient(to right, rgba(150, 249, 222, 0.1), rgba(219, 237, 255, 0.3))"
           }}
         >
-          <Pulse ownerBalances={ownerBalances}web3={web3} accounts={accounts} contract={contract} />
+          <Pulse
+            ownerBalances={ownerBalances}
+            web3={web3}
+            accounts={accounts}
+            contract={contract}
+          />
         </Tab.Pane>
       )
     },
 
     {
       menuItem: "Dispute DR",
-      render: () => (
+      pane: (
         <Tab.Pane
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, rgba(150, 249, 222, 0.1), rgba(219, 237, 255, 0.3))"
-        }}
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, rgba(150, 249, 222, 0.1), rgba(219, 237, 255, 0.3))"
+          }}
         >
           <Dispute web3={web3} accounts={accounts} contract={contract} />
         </Tab.Pane>
@@ -144,11 +150,17 @@ export default function App() {
         <Header as="h2" color="grey">
           The lexDAO Registry
         </Header>
-        <Tab
-          menu={{ tabular: true }}
-          panes={panes}
-          style={{ paddingTop: "25px" }}
-        />
+        {contract ? (
+          <Tab
+            menu={{ tabular: true }}
+            panes={panes}
+            style={{ paddingTop: "25px" }}
+            renderActiveOnly={false}
+          />
+        ) : (
+          <Loader active={true} />
+        )}
+
         <Label
           style={{ background: "none", paddingTop: "15px" }}
           as="a"
