@@ -9,10 +9,11 @@ import {
 } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import "openlaw-elements/dist/openlaw-elements.min.css";
+import AgreementPreview from "./AgreementPreview";
 import OpenLawForm from "openlaw-elements";
 
 export default function Dispute() {
-  const [apiClient, setapiClient] = useState()
+  const [apiClient, setapiClient] = useState();
   const [state, setState] = useState({
     // Variables for OpenLaw API
     openLawConfig: null,
@@ -24,7 +25,10 @@ export default function Dispute() {
     compiledTemplate: null,
     parameters: {},
     executionResult: null,
-    variables: null
+    variables: null,
+    loading: false,
+    success: false,
+    previewHTML: null
   });
 
   const openLawConfig = {
@@ -35,10 +39,8 @@ export default function Dispute() {
   };
 
   const instantiateOLClient = async () => {
-
     const newapiClient = new APIClient("https://lib.openlaw.io/api/v1/default");
-    newapiClient
-      .login(openLawConfig.userName, openLawConfig.password)
+    newapiClient.login(openLawConfig.userName, openLawConfig.password);
 
     //Retrieve your OpenLaw template by name, use async/await
     const template = await newapiClient.getTemplate(openLawConfig.templateName);
@@ -62,7 +64,7 @@ export default function Dispute() {
     );
 
     const variables = await Openlaw.getExecutedVariables(executionResult, {});
-    
+
     setapiClient(newapiClient);
     setState({
       ...state,
@@ -74,12 +76,89 @@ export default function Dispute() {
       executionResult,
       variables
     });
-
   };
+
+  useEffect(() => {}, [state.loading]);
 
   useEffect(() => {
     instantiateOLClient();
   }, []);
+
+  const buildOpenLawParamsObj = async (template, creatorId) => {
+
+
+    const object = {
+      templateId: template.id,
+      title: template.title,
+      text: template.content,
+      creator: "Ross Campbell",
+      parameters: state.parameters,
+      overriddenParagraphs: {},
+      agreements: {},
+      readonlyEmails: [],
+      editEmails: [],
+      draftId: ""
+    };
+    return object;
+  };
+
+  const onSubmit = async () => {
+    try {
+      //login to api
+      setState({ ...state, loading: true });
+      apiClient.login(openLawConfig.userName, openLawConfig.password);
+      console.log("apiClient logged in");
+
+      //add Open Law params to be uploaded
+      const uploadParams = await buildOpenLawParamsObj(
+        state.template,
+        state.creatorId
+      );
+      console.log("parmeters from user..", uploadParams.parameters);
+      console.log("all parameters uploading...", uploadParams);
+
+      //uploadDraft, sends a draft contract to "Draft Management", which can be edited.
+      const draftId = await apiClient.uploadDraft(uploadParams);
+      console.log("draft id..", draftId);
+
+      const contractParams = {
+        ...uploadParams,
+        draftId
+      };
+      console.log(contractParams);
+
+      const contractId = await apiClient.uploadContract(contractParams);
+      console.log(contractId);
+
+      await apiClient.sendContract([], [], contractId);
+
+      await setState({ ...state, loading: false, success: true, draftId });
+      document.getElementById("success").scrollIntoView({
+        behavior: "smooth"
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const setTemplatePreview = async () => {
+    const executionResult = await Openlaw.execute(
+      state.compiledTemplate.compiledTemplate,
+      {},
+      state.parameters
+    );
+    const agreements = await Openlaw.getAgreements(
+      executionResult.executionResult
+    );
+    const previewHTML = await Openlaw.renderForReview(
+      agreements[0].agreement,
+      {}
+    );
+    await setState({ ...state, previewHTML });
+    document.getElementById("preview").scrollIntoView({
+      behavior: "smooth"
+    });
+  };
 
   const onChange = (key, value) => {
     const parameters = key
@@ -104,7 +183,7 @@ export default function Dispute() {
   return (
     <div className="App">
       <Container>
-      <OpenLawForm
+        <OpenLawForm
           apiClient={apiClient}
           executionResult={state.executionResult}
           parameters={state.parameters}
@@ -112,6 +191,25 @@ export default function Dispute() {
           openLaw={Openlaw}
           variables={state.variables}
         />
+        <div className="button-group">
+          <Button onClick={setTemplatePreview}>Preview</Button>
+          <Button primary loading={state.loading} onClick={onSubmit}>
+            Submit
+          </Button>
+        </div>
+
+        <Message
+          style={state.success ? { display: "block" } : { display: "none" }}
+          className="success-message"
+          positive
+          id="success"
+        >
+          <Message.Header>Submission Successful</Message.Header>
+          <p>
+            Check your <b>e-mail</b> to sign contract
+          </p>
+        </Message>
+        <AgreementPreview id="preview" previewHTML={state.previewHTML} />
       </Container>
     </div>
   );
